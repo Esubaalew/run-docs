@@ -51,4 +51,4 @@ The full Apache 2.0 license text is available at:
 
 ## Questions?
 
-For licensing questions, contact esubalew@example.com.
+For licensing questions, open an issue on [GitHub](https://github.com/Esubaalew/run/issues).

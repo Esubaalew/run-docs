@@ -398,7 +398,6 @@ run rust "..."
 
 ```bash
 #!/bin/bash
-# Pick one alias and stick with it
 run py script1.py
 run py script2.py
 run py script3.py
@@ -407,20 +406,14 @@ run py script3.py
 ### 3. Use Runtime Names When Relevant
 
 ```bash
-# Emphasize Node.js runtime
 run node server.js
-
-# Emphasize Deno runtime
 run deno app.ts
 ```
 
 ### 4. Match Your Team's Conventions
 
 ```bash
-# If your team says "py"
 run py "..."
-
-# If your team says "python"
 run python "..."
 ```
 
@@ -443,12 +436,10 @@ Available language engines:
 You can create your own aliases in your shell:
 
 ```bash
-# Add to ~/.bashrc or ~/.zshrc
 alias pyrun='run python'
 alias jsrun='run javascript'
 alias rsrun='run rust'
 
-# Use them
 pyrun "print('hello')"
 jsrun "console.log('hello')"
 rsrun "fn main() { println!(\"hello\"); }"

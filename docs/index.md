@@ -68,25 +68,18 @@ run is built with Rust for several compelling reasons:
 ## Quickstart
 
 ```bash
-# Show build metadata for the current binary
 run --version
 
-# Execute a snippet explicitly
 run --lang python --code "print('hello, polyglot world!')"
 
-# Let run detect language from the file extension
 run examples/go/hello/main.go
 
-# Drop into the interactive REPL (type :help inside)
 run
 
-# Pipe stdin (here: JSON) into Node.js
 echo '{"name":"Ada"}' | run js --code "const data = JSON.parse(require('fs').readFileSync(0, 'utf8')); console.log(\`hi \${data.name}\`)"
 
-# Pipe stdin into Python
 echo "Hello from stdin" | run python --code "import sys; print(sys.stdin.read().strip().upper())"
 
-# Pipe stdin into Go
 echo "world" | run go --code 'import "fmt"; import "bufio"; import "os"; scanner := bufio.NewScanner(os.Stdin); scanner.Scan(); fmt.Printf("Hello, %s!\n", scanner.Text())'
 ```
 
@@ -158,6 +151,33 @@ run --version
 4. Manage session state for the interactive REPL (persistent modules, stateful scripts, or regenerated translation units).
 
 This architecture keeps the core lightweight while making it easy to add new runtimes or swap implementations.
+
+### Architecture Flow
+
+```mermaid
+graph TD
+    A[CLI Input] --> B[Parser]
+    B --> C{Language Specified?}
+    C -->|Yes| E[Engine Selector]
+    C -->|No| D[Language Detector]
+    D --> E
+    E --> F{Toolchain Available?}
+    F -->|Yes| G[Language Engine]
+    F -->|No| H[Error: Toolchain Not Found]
+    G --> I{Execution Mode}
+    I -->|REPL| J[Session Manager]
+    I -->|One-shot| K[Execute Code]
+    J --> L[Stateful Execution]
+    K --> M[Capture Output]
+    L --> M
+    M --> N[Format & Display]
+    N --> O[Return Result]
+    
+    style A fill:#e1f5ff
+    style G fill:#fff4e1
+    style N fill:#e7ffe1
+    style H fill:#ffe1e1
+```
 
 ## Supported languages
 

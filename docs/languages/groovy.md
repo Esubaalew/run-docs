@@ -68,13 +68,8 @@ run groovy "def square = { x -> x * x }; println square(7)"
 Execute Groovy scripts from files. run will automatically detect .groovy files or you can specify the language explicitly:
 
 ```bash
-# Create a Groovy file
 echo "println 'Hello from file!'" > hello.groovy
-
-# Execute with language specified
 run groovy hello.groovy
-
-# Or let run auto-detect from extension
 run hello.groovy
 # Output: Hello from file!
 ```
@@ -82,7 +77,6 @@ run hello.groovy
 ### Script with Classes
 
 ```bash
-# Create a Groovy script
 cat > person.groovy << 'EOF'
 class Person {
     String name
@@ -110,7 +104,6 @@ Without quoting, shells like Bash will interpret Groovy's string interpolation s
 ### Problem - Unquoted Delimiter
 
 ```bash
-# Shell expands $name before Groovy sees it
 cat <<EOF | run groovy
 def name = "Esubalew"
 println "Hello, \$name!"
@@ -121,7 +114,6 @@ EOF
 ### Solution - Quoted Delimiter
 
 ```bash
-# Shell passes code unchanged to Groovy
 cat <<'EOF' | run groovy
 def name = "Esubalew"
 println "Hello, \$name!"
