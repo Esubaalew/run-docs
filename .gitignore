@@ -33,6 +33,7 @@ SEO_SETUP.md
 QUICKSTART.md
 CONTRIBUTING.md
 deploy.sh
+DEPLOY_NOW.sh
 
 # Keep only the actual documentation site files
 # Everything else in docs/ and configs should be committed
