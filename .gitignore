@@ -25,15 +25,15 @@ __pycache__/
 Thumbs.db
 
 # Helper documentation (not part of the actual site)
-SUMMARY.md
-BUILD_INSTRUCTIONS.md
-DEPLOYMENT_SUMMARY.md
-DUAL_DOMAIN_STRATEGY.md
-SEO_SETUP.md
-QUICKSTART.md
-CONTRIBUTING.md
-deploy.sh
-DEPLOY_NOW.sh
+/SUMMARY.md
+/BUILD_INSTRUCTIONS.md
+/DEPLOYMENT_SUMMARY.md
+/DUAL_DOMAIN_STRATEGY.md
+/SEO_SETUP.md
+/QUICKSTART.md
+/CONTRIBUTING.md
+/deploy.sh
+/DEPLOY_NOW.sh
 
 # Keep only the actual documentation site files
 # Everything else in docs/ and configs should be committed
