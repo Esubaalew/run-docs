@@ -5,7 +5,7 @@ site_url: https://run.esubalew.et
 
 repo_name: Esubaalew/run
 repo_url: https://github.com/Esubaalew/run
-edit_uri: edit/master/docs/
+edit_uri: https://github.com/Esubaalew/run-docs/edit/main/docs/
 
 copyright: Copyright &copy; 2025 Esubalew
 
@@ -72,9 +72,15 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/Esubaalew/run
       name: GitHub
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/esubaalew
-      name: Twitter
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/esubaalew
+      name: X
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/esubaalew
+      name: LinkedIn
+    - icon: fontawesome/solid/globe
+      link: https://esubalew.et
+      name: Website
   version:
     provider: mike
   og_image: assets/og-image.png

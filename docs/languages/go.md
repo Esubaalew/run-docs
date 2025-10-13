@@ -48,7 +48,6 @@ run go "package main; import \"fmt\"; func main() { name := \"Alice\"; fmt.Print
 Execute Go source files:
 
 ```bash
-# Create a Go file
 cat > hello.go << 'EOF'
 package main
 

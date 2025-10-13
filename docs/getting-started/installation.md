@@ -38,10 +38,7 @@ run --version
 For macOS and Linux users with Homebrew:
 
 ```bash
-# Add the tap
 brew tap Esubaalew/run
-
-# Install run
 brew install run
 ```
 
@@ -58,10 +55,7 @@ run --version
 Download and install the `.deb` package:
 
 ```bash
-# Download the latest release
 curl -LO https://github.com/Esubaalew/run/releases/latest/download/run_amd64.deb
-
-# Install
 sudo dpkg -i run_amd64.deb
 ```
 
@@ -94,13 +88,8 @@ run --version
 Use the automated install script:
 
 ```bash
-# Download the script
 curl -fsSLO https://raw.githubusercontent.com/Esubaalew/run/master/scripts/install.sh
-
-# Make it executable
 chmod +x install.sh
-
-# Run with --add-path to automatically add to PATH
 ./install.sh --add-path
 ```
 
@@ -144,14 +133,9 @@ run --version
 For the latest development version or to contribute:
 
 ```bash
-# Clone the repository
 git clone https://github.com/Esubaalew/run.git
 cd run
-
-# Build with Cargo
 cargo build --release
-
-# Install globally
 sudo cp target/release/run /usr/local/bin/
 ```
 
