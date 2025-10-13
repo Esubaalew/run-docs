@@ -155,9 +155,6 @@ plugins:
       enable_creation_date: true
       type: timeago
       fallback_to_build_date: true
-  - sitemap:
-      change_freq: weekly
-      priority: 0.8
 
 nav:
   - Home: index.md
