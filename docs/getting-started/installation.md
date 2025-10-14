@@ -33,23 +33,6 @@ run --version
 
 ---
 
-### Homebrew (macOS / Linux)
-
-For macOS and Linux users with Homebrew:
-
-```bash
-brew tap Esubaalew/run
-brew install run
-```
-
-**Verify the installation:**
-
-```bash
-run --version
-```
-
----
-
 ### Debian / Ubuntu
 
 Download and install the `.deb` package:
@@ -182,16 +165,16 @@ sudo apt install build-essential  # Debian/Ubuntu
 xcode-select --install           # macOS
 ```
 
-### Check Available Languages
+### Check Supported Languages
 
-After installing, check which languages are available:
+To see the list of languages supported by the run tool:
 
 ```bash
 run
 >>> :languages
 ```
 
-This will show all detected language engines and their status.
+This will show all languages that the run tool supports. Note that to actually execute code in a specific language, you still need to have that language's runtime or compiler installed on your system.
 
 ---
 
@@ -201,12 +184,6 @@ This will show all detected language engines and their status.
 
 ```bash
 cargo install run-kit --force
-```
-
-### Homebrew
-
-```bash
-brew upgrade run
 ```
 
 ### Scoop
@@ -223,12 +200,6 @@ scoop update run
 
 ```bash
 cargo uninstall run-kit
-```
-
-### Homebrew
-
-```bash
-brew uninstall run
 ```
 
 ### Scoop
