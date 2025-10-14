@@ -15,6 +15,9 @@ run kts "fun main() { println(\"Hello\") }"
 # Output: Hello (x3)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 Kotlin's REPL maintains state across commands. Variables, functions, and classes persist within the same REPL session.

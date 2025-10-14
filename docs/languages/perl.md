@@ -14,6 +14,9 @@ run pl "print 'Hello\\n';"
 # Output: Hello (x2)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 Perl's REPL is STATEFUL - variables persist across commands.

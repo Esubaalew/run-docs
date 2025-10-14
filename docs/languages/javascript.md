@@ -59,6 +59,31 @@ run js "const nums = [1,2,3,4,5]; console.log(nums.map(x => x * 2))"
 # Output: [ 2, 4, 6, 8, 10 ]
 ```
 
+## Multi-line Code
+
+!!! tip "Best Practice: Use Heredoc"
+    For multi-line JavaScript code, **always use heredoc** to avoid shell quoting issues:
+    
+    ```bash
+    # RECOMMENDED: Heredoc
+    run js << 'EOF'
+    const users = [
+        { name: 'Alice', age: 30 },
+        { name: 'Bob', age: 25 }
+    ];
+    users.forEach(u => console.log(`${u.name}: ${u.age}`));
+    EOF
+    
+    # OK: Single-line with semicolons
+    run js "const x = [1,2,3]; x.forEach(n => console.log(n * 2));"
+    
+    # AVOID: Multi-line strings (quote/escaping issues)
+    run js "
+    const users = [{name: 'Alice'}];
+    console.log(users);
+    "
+    ```
+
 ## File Execution
 
 Execute JavaScript files with Node.js:

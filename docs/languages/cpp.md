@@ -93,6 +93,9 @@ EOF
 # Output: Hello 42
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line C++ code, **always use heredoc** (`<< 'EOF'`) or pipe from stdin. This avoids shell quoting issues, escape sequences, and ensures your code works reliably.
+
 ## Step-by-step in REPL Mode
 
 For step-by-step execution with persistent state, enter REPL mode once, then type commands interactively:

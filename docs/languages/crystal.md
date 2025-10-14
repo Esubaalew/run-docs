@@ -15,6 +15,9 @@ run crystal-lang "puts \"Hello\""
 # Output: Hello (x3)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 Crystal's REPL maintains state across commands. Variables, methods, and classes persist within the same REPL session.

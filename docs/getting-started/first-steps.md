@@ -421,6 +421,29 @@ EOF
 run python "x = 10; y = 20; print(f'Sum: {x + y}')"
 ```
 
+**Why is heredoc so important? Real example:**
+
+```bash
+# FAILS with: zsh: event not found: [1,
+run rust "
+fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+    println!(\"Sum: {}\", numbers.iter().sum());
+}
+"
+
+# WORKS perfectly
+run rust << 'EOF'
+fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+    println!("Sum: {}", numbers.iter().sum());
+}
+EOF
+# Output: Sum: 15
+```
+
+The multi-line string fails because the shell's history expansion interprets `![1,` as a command before `run` even sees it!
+
 ### 3. Quote Properly
 
 ```bash

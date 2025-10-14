@@ -264,12 +264,12 @@ EOF
 ```
 
 **Advantages:**
-- ✅ No escaping needed
-- ✅ Handles quotes naturally (single, double, mixed)
-- ✅ No shell interpolation issues
-- ✅ Perfect newline handling
-- ✅ Works with regex patterns, special characters
-- ✅ Most readable for complex code
+- No escaping needed
+- Handles quotes naturally (single, double, mixed)
+- No shell interpolation issues
+- Perfect newline handling
+- Works with regex patterns, special characters
+- Most readable for complex code
 
 !!! tip "Why 'EOF' with quotes?"
     Using quotes (`'EOF'`) prevents shell variable expansion in the heredoc. This is critical for code that uses `$` or other special characters.
@@ -283,12 +283,12 @@ run python "x = 10; y = 20; print(f'Sum: {x + y}'); print(f'Product: {x * y}')"
 ```
 
 **Advantages:**
-- ✅ Compact one-liner
-- ✅ Good for simple multi-statement code
+- Compact one-liner
+- Good for simple multi-statement code
 
 **Limitations:**
-- ⚠️ Less readable for complex code
-- ⚠️ Still need to escape quotes
+- Less readable for complex code
+- Still need to escape quotes
 
 ### 3. Multi-line String (Use with Caution)
 
@@ -302,10 +302,10 @@ print(f'Sum: {x + y}')
 ```
 
 **Limitations:**
-- ⚠️ Shell may interpret special characters
-- ⚠️ Quote conflicts possible
-- ⚠️ Variable expansion issues with `$`
-- ⚠️ Harder to debug
+- Shell may interpret special characters
+- Quote conflicts possible
+- Variable expansion issues with `$`
+- Harder to debug
 
 ### 4. Escaped Newlines (Not Recommended)
 
@@ -314,9 +314,9 @@ run python "x = 10\ny = 20\nprint(x + y)"
 ```
 
 **Limitations:**
-- ⚠️ Hard to read
-- ⚠️ Difficult to maintain
-- ⚠️ Error-prone
+- Hard to read
+- Difficult to maintain
+- Error-prone
 
 ### Practical Examples: Why Heredoc Wins
 
@@ -324,7 +324,7 @@ run python "x = 10\ny = 20\nprint(x + y)"
 
 This is a common and frustrating error when using multi-line strings:
 
-=== "Multi-line String ✗ FAILS"
+=== "Multi-line String (FAILS)"
 
     ```bash
     run rust "
@@ -340,7 +340,7 @@ This is a common and frustrating error when using multi-line strings:
     
     **Why?** The shell's history expansion feature interprets `![1,` as a history command, causing immediate failure before `run` even sees the code.
 
-=== "Heredoc ✓ WORKS"
+=== "Heredoc (WORKS)"
 
     ```bash
     run rust << 'EOF'
@@ -356,7 +356,7 @@ This is a common and frustrating error when using multi-line strings:
     
     Perfect! No shell interference, no escaping, natural syntax.
 
-=== "Single-line ✓ WORKS"
+=== "Single-line (WORKS)"
 
     ```bash
     run rust 'fn main() { let numbers = vec![1,2,3,4,5]; let sum: i32 = numbers.iter().sum(); println!("Sum: {}", sum); }'
@@ -366,7 +366,7 @@ This is a common and frustrating error when using multi-line strings:
     
     Single quotes prevent shell expansion. Good for compact one-liners.
 
-=== "REPL ✓ WORKS"
+=== "REPL (WORKS)"
 
     ```bash
     rust>>> fn main() { let numbers = vec![1,2,3,4,5]; let sum: i32 = numbers.iter().sum(); println!("Sum: {}", sum); }
@@ -377,7 +377,7 @@ This is a common and frustrating error when using multi-line strings:
 
 #### Regex and Quotes (Python)
 
-=== "Heredoc ✓"
+=== "Heredoc"
 
     ```bash
     run python << 'EOF'
@@ -389,7 +389,7 @@ This is a common and frustrating error when using multi-line strings:
     EOF
     ```
 
-=== "Multi-line String ✗"
+=== "Multi-line String"
 
     ```bash
     # Problematic - quotes conflict, escaping gets messy
@@ -402,7 +402,7 @@ This is a common and frustrating error when using multi-line strings:
     "
     ```
 
-=== "Inline ✓"
+=== "Inline"
 
     ```bash
     # Works but less readable
@@ -597,7 +597,7 @@ run script.py  # Uses cached .pyc
 
 ## Common Mistakes
 
-### ❌ Using Multi-line Strings Instead of Heredoc
+### Using Multi-line Strings Instead of Heredoc
 
 **The Problem:**
 
@@ -614,7 +614,7 @@ fn main() {
 **The Solution:**
 
 ```bash
-# ✓ Use heredoc
+# Use heredoc
 run rust << 'EOF'
 fn main() {
     let numbers = vec![1, 2, 3, 4, 5];
@@ -622,61 +622,61 @@ fn main() {
 }
 EOF
 
-# ✓ Or single-line
+# Or single-line
 run rust 'fn main() { let numbers = vec![1,2,3,4,5]; println!("Sum: {}", numbers.iter().sum()); }'
 ```
 
 **Why it fails:** Shell history expansion (`!`), special characters, quote conflicts, and variable expansion issues make multi-line strings unreliable.
 
-### ❌ Forgetting to Quote
+### Forgetting to Quote
 
 ```bash
-#  Shell interprets this wrong
+# Shell interprets this wrong
 run python print('hello')
 
-#  Proper quoting
+# Proper quoting
 run python "print('hello')"
 ```
 
-### ❌ Wrong Quote Nesting
+### Wrong Quote Nesting
 
 ```bash
-#  Breaks on inner quotes
+# Breaks on inner quotes
 run python "print("hello")"
 
-#  Escape or mix quotes
+# Escape or mix quotes
 run python "print(\"hello\")"
 run python 'print("hello")'
 
-#  Or use heredoc (best)
+# Or use heredoc (best)
 run python << 'EOF'
 print("hello")
 EOF
 ```
 
-### ❌ Shell Variable Expansion
+### Shell Variable Expansion
 
 ```bash
-#  $x expands in shell, not Python
+# $x expands in shell, not Python
 run python "x = 5; print($x)"
 
-#  Escape or use single quotes
+# Escape or use single quotes
 run python 'x = 5; print(x)'
 
-#  Or use heredoc (best)
+# Or use heredoc (best)
 run python << 'EOF'
 x = 5
 print(x)
 EOF
 ```
 
-### ❌ Ambiguous Auto-Detection
+### Ambiguous Auto-Detection
 
 ```bash
-#  Might detect as Python, Ruby, or Lua
+# Might detect as Python, Ruby, or Lua
 run "print('hello')"
 
-#  Explicit language
+# Explicit language
 run python "print('hello')"
 ```
 
