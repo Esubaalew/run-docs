@@ -217,21 +217,22 @@ Sum: 15
 
 ## Interactive REPL
 
-For longer sessions, use the interactive mode:
+For longer sessions, use the interactive mode. By default, `run` starts in Python mode when no arguments are provided:
 
 ```bash
 $ run
 run universal REPL. Type :help for commands.
 
 >>> :help
-Available commands:
-  :help              - Show this help
-  :languages         - List available engines
-  :lang <id>         - Switch language
-  :py, :go, :rust... - Shortcuts for switching
-  :load <path>       - Execute a file
-  :reset             - Reset current session
-  :exit, :quit       - Exit REPL
+Commands:
+  :help                 Show this help message
+  :languages            List available languages
+  :lang <id>            Switch to language <id>
+  :detect on|off        Enable or disable auto language detection
+  :reset                Reset the current language session
+  :load <path>          Execute a file in the current language
+  :exit, :quit          Leave the REPL
+Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 
 >>> :py
 switched to python
@@ -337,7 +338,21 @@ Available language engines:
 ### Command-Line Help
 
 ```bash
-run --help
+$ run --help
+Universal multi-language runner and REPL
+
+Usage: run [OPTIONS] [ARGS]...
+
+Arguments:
+  [ARGS]...  Positional arguments (language, code, or file)
+
+Options:
+  -V, --version      Print version information and exit
+  -l, --lang <LANG>  Explicitly choose the language to execute
+  -f, --file <PATH>  Execute code from the provided file path
+  -c, --code <CODE>  Execute the provided code snippet
+      --no-detect    Disable heuristic language detection
+  -h, --help         Print help
 ```
 
 ### REPL Help
@@ -345,12 +360,28 @@ run --help
 ```bash
 $ run
 >>> :help
+Commands:
+  :help                 Show this help message
+  :languages            List available languages
+  :lang <id>            Switch to language <id>
+  :detect on|off        Enable or disable auto language detection
+  :reset                Reset the current language session
+  :load <path>          Execute a file in the current language
+  :exit, :quit          Leave the REPL
+Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```
 
 ### Version Info
 
 ```bash
-run --version
+$ run --version
+
+run-kit 0.2.1
+Universal multi-language runner and smart REPL
+author: Esubalew Chekol <esubalewchekol6@gmail.com>
+homepage: https://esubalew.et
+repository: https://github.com/Esubaalew/run
+license: Apache-2.0
 ```
 
 ---

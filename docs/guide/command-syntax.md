@@ -7,8 +7,10 @@
 The general command structure:
 
 ```bash
-run [OPTIONS] [LANGUAGE] [CODE|FILE]
+run [OPTIONS] [ARGS]...
 ```
+
+Where `[ARGS]...` can be positional arguments like language, code, or file.
 
 ## Command Variations
 
@@ -48,7 +50,27 @@ All these commands are equivalent:
 
 ## Flags Reference
 
-### Language Specification
+Full help output:
+
+```bash
+$ run --help
+Universal multi-language runner and REPL
+
+Usage: run [OPTIONS] [ARGS]...
+
+Arguments:
+  [ARGS]...  Positional arguments (language, code, or file)
+
+Options:
+  -V, --version      Print version information and exit
+  -l, --lang <LANG>  Explicitly choose the language to execute
+  -f, --file <PATH>  Execute code from the provided file path
+  -c, --code <CODE>  Execute the provided code snippet
+      --no-detect    Disable heuristic language detection
+  -h, --help         Print help
+```
+
+### Language Specification (`-l, --lang`)
 
 Specify the programming language to use:
 
@@ -72,7 +94,7 @@ run --lang py3 "..."
 run --lang python3 "..."
 ```
 
-### Code Input
+### Code Input (`-c, --code`)
 
 Provide code as a command-line string:
 
@@ -87,7 +109,7 @@ run -c "print('hello')"
 run python "print('hello')"
 ```
 
-### File Input
+### File Input (`-f, --file`)
 
 Execute a file:
 
@@ -97,9 +119,24 @@ run script.py
 run main.go
 run app.js
 
-# Explicit lang + file
+# Explicit with --file flag
+run --file script.py
+
+# With -f shorthand
+run -f script.py
+
+# With language override
 run --lang python script.py
 run python script.py
+```
+
+### Disable Detection (`--no-detect`)
+
+Disable automatic language detection:
+
+```bash
+# Force explicit language specification
+run --no-detect --lang python "print('hello')"
 ```
 
 ### Help & Version
@@ -109,7 +146,7 @@ run python script.py
 run --help
 run -h
 
-# Show version
+# Show version (detailed)
 run --version
 run -V
 ```

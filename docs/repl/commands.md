@@ -9,7 +9,7 @@ Complete reference for all REPL meta-commands. These commands start with `:` and
 | `:help` | Show help message |
 | `:languages` | List available languages |
 | `:lang <id>` | Switch to a language |
-| `:detect on\|off\|toggle` | Control auto-detection |
+| `:detect on\|off` | Control auto-detection |
 | `:load <path>` | Execute a file |
 | `:reset` | Clear session state |
 | `:exit` / `:quit` | Exit the REPL |
@@ -28,24 +28,22 @@ Display available commands and language shortcuts.
 
 ```bash
 >>> :help
-Available commands:
-  :help              - Show this help
-  :languages         - List available engines and their status
-  :lang <id>         - Switch to another language engine
-  :detect on|off|toggle - Toggle automatic language detection
-  :load <path>       - Execute a file in the current session
-  :reset             - Clear current session state
-  :exit, :quit       - Exit the REPL
-
-Language shortcuts:
-  :py, :js, :rust, :go, :c, :cpp, :java, :rb, ...
+Commands:
+  :help                 Show this help message
+  :languages            List available languages
+  :lang <id>            Switch to language <id>
+  :detect on|off        Enable or disable auto language detection
+  :reset                Reset the current language session
+  :load <path>          Execute a file in the current language
+  :exit, :quit          Leave the REPL
+Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```
 
 ---
 
 ## `:languages`
 
-List all available language engines with their status and aliases.
+List all languages supported by the run tool.
 
 ### Usage
 
@@ -57,25 +55,12 @@ List all available language engines with their status and aliases.
 
 ```bash
 >>> :languages
-Available language engines:
-✓ python (python, py, py3, python3)
-✓ javascript (javascript, js, node, nodejs)
-✓ typescript (typescript, ts, ts-node, deno)
-✓ rust (rust, rs)
-✓ go (go, golang)
-✓ c (c, gcc, clang)
-✓ cpp (cpp, c++, g++)
-✓ java (java)
-✓ ruby (ruby, rb, irb)
-✓ bash (bash, sh, shell, zsh)
-✗ haskell (haskell, hs, ghci) - not installed
-✗ julia (julia, jl) - not installed
-...
+available languages: bash, c, cpp, crystal, csharp, dart, elixir, go, groovy, haskell, java, javascript, julia, kotlin, lua, nim, perl, php, python, r, ruby, rust, swift, typescript, zig
 ```
 
-**Legend:**
-- ✓ = Language toolchain is available
-- ✗ = Language toolchain is not installed
+### Description
+
+This command displays a comma-separated list of all programming languages that the run tool supports. Note that this shows the languages built into run, not which language runtimes or compilers are actually installed on your system. To execute code in a specific language, you still need to have that language's runtime or compiler installed
 
 ---
 
@@ -152,42 +137,37 @@ python>>> x
 
 ---
 
-## `:detect on|off|toggle`
+## `:detect on|off`
 
 Control automatic language detection.
 
 ### Usage
 
 ```bash
->>> :detect <on|off|toggle>
+>>> :detect <on|off>
 ```
 
 ### Parameters
 
 - `on` - Enable auto-detection
 - `off` - Disable auto-detection
-- `toggle` - Switch between on/off
 
 ### Examples
 
 ```bash
 # Enable auto-detection
 >>> :detect on
-Language auto-detection enabled
+auto-detect enabled
 
 >>> print('hello')  # Auto-detects as Python
 hello
 
 # Disable auto-detection
 >>> :detect off
-Language auto-detection disabled
+auto-detect disabled
 
 >>> console.log('hello')  # Stays in current language
 # Error: current language doesn't recognize this syntax
-
-# Toggle
->>> :detect toggle
-Language auto-detection enabled
 ```
 
 ### When to Use
@@ -321,7 +301,7 @@ python>>> x + y
 300
 
 python>>> :reset
-Session reset.
+session for 'python' reset
 
 python>>> x
 NameError: name 'x' is not defined
@@ -429,13 +409,13 @@ Many commands have shorter aliases:
 >>> :lang go
 ```
 
-### 2. Check Languages First
+### 2. Check Supported Languages
 
-Before switching, check what's available:
+Check what languages run supports:
 
 ```bash
 >>> :languages
-# See what's installed
+# See all supported languages
 ```
 
 ### 3. Load Common Utilities
