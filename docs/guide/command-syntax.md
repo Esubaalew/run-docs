@@ -247,7 +247,11 @@ EOF
 
 ## Multi-Line Code
 
-### Heredoc (Recommended)
+For multi-line code, you have several options. Here's a comparison:
+
+### 1. Heredoc (Recommended) ⭐
+
+**Most reliable and recommended method:**
 
 ```bash
 run python << 'EOF'
@@ -259,10 +263,34 @@ for name in ['Alice', 'Bob', 'Charlie']:
 EOF
 ```
 
-!!! tip "Why 'EOF' with quotes?"
-    Quotes prevent shell variable expansion in the heredoc.
+**Advantages:**
+- ✅ No escaping needed
+- ✅ Handles quotes naturally (single, double, mixed)
+- ✅ No shell interpolation issues
+- ✅ Perfect newline handling
+- ✅ Works with regex patterns, special characters
+- ✅ Most readable for complex code
 
-### Newline in String
+!!! tip "Why 'EOF' with quotes?"
+    Using quotes (`'EOF'`) prevents shell variable expansion in the heredoc. This is critical for code that uses `$` or other special characters.
+
+### 2. Inline with Semicolons
+
+**Good for short scripts:**
+
+```bash
+run python "x = 10; y = 20; print(f'Sum: {x + y}'); print(f'Product: {x * y}')"
+```
+
+**Advantages:**
+- ✅ Compact one-liner
+- ✅ Good for simple multi-statement code
+
+**Limitations:**
+- ⚠️ Less readable for complex code
+- ⚠️ Still need to escape quotes
+
+### 3. Multi-line String (Use with Caution)
 
 ```bash
 # Bash allows literal newlines in quotes
@@ -273,11 +301,116 @@ print(f'Sum: {x + y}')
 "
 ```
 
-### Escaped Newlines
+**Limitations:**
+- ⚠️ Shell may interpret special characters
+- ⚠️ Quote conflicts possible
+- ⚠️ Variable expansion issues with `$`
+- ⚠️ Harder to debug
+
+### 4. Escaped Newlines (Not Recommended)
 
 ```bash
 run python "x = 10\ny = 20\nprint(x + y)"
 ```
+
+**Limitations:**
+- ⚠️ Hard to read
+- ⚠️ Difficult to maintain
+- ⚠️ Error-prone
+
+### Practical Examples: Why Heredoc Wins
+
+#### Shell History Expansion Failure (Rust)
+
+This is a common and frustrating error when using multi-line strings:
+
+=== "Multi-line String ✗ FAILS"
+
+    ```bash
+    run rust "
+    fn main() {
+        let numbers = vec![1, 2, 3, 4, 5];
+        let sum: i32 = numbers.iter().sum();
+        println!(\"Sum: {}\", sum);
+    }
+    "
+    ```
+    
+    **ERROR:** `zsh: event not found: [1,`
+    
+    **Why?** The shell's history expansion feature interprets `![1,` as a history command, causing immediate failure before `run` even sees the code.
+
+=== "Heredoc ✓ WORKS"
+
+    ```bash
+    run rust << 'EOF'
+    fn main() {
+        let numbers = vec![1, 2, 3, 4, 5];
+        let sum: i32 = numbers.iter().sum();
+        println!("Sum: {}", sum);
+    }
+    EOF
+    ```
+    
+    **Output:** `Sum: 15`
+    
+    Perfect! No shell interference, no escaping, natural syntax.
+
+=== "Single-line ✓ WORKS"
+
+    ```bash
+    run rust 'fn main() { let numbers = vec![1,2,3,4,5]; let sum: i32 = numbers.iter().sum(); println!("Sum: {}", sum); }'
+    ```
+    
+    **Output:** `Sum: 15`
+    
+    Single quotes prevent shell expansion. Good for compact one-liners.
+
+=== "REPL ✓ WORKS"
+
+    ```bash
+    rust>>> fn main() { let numbers = vec![1,2,3,4,5]; let sum: i32 = numbers.iter().sum(); println!("Sum: {}", sum); }
+    Sum: 15
+    ```
+    
+    REPL mode also works great for one-line statements across all languages.
+
+#### Regex and Quotes (Python)
+
+=== "Heredoc ✓"
+
+    ```bash
+    run python << 'EOF'
+    import re
+    text = 'Hello 123 World 456'
+    pattern = r'\d+'  # No escaping needed
+    numbers = re.findall(pattern, text)
+    print(f"Found: {numbers}")
+    EOF
+    ```
+
+=== "Multi-line String ✗"
+
+    ```bash
+    # Problematic - quotes conflict, escaping gets messy
+    run python "
+    import re
+    text = 'Hello 123 World 456'
+    pattern = r'\d+'
+    numbers = re.findall(pattern, text)
+    print(f\"Found: {numbers}\")
+    "
+    ```
+
+=== "Inline ✓"
+
+    ```bash
+    # Works but less readable
+    run python "import re; text = 'Hello 123 World 456'; print(re.findall(r'\d+', text))"
+    ```
+
+!!! success "Best Practice"
+    **Always use heredoc (`<< 'EOF'`) for multi-line code.** It's the most reliable, readable, and maintainable approach.
 
 ## Piping Code
 
@@ -464,7 +597,38 @@ run script.py  # Uses cached .pyc
 
 ## Common Mistakes
 
-###  Forgetting to Quote
+### ❌ Using Multi-line Strings Instead of Heredoc
+
+**The Problem:**
+
+```bash
+# FAILS with: zsh: event not found: [1,
+run rust "
+fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+    println!(\"Sum: {}\", numbers.iter().sum());
+}
+"
+```
+
+**The Solution:**
+
+```bash
+# ✓ Use heredoc
+run rust << 'EOF'
+fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+    println!("Sum: {}", numbers.iter().sum());
+}
+EOF
+
+# ✓ Or single-line
+run rust 'fn main() { let numbers = vec![1,2,3,4,5]; println!("Sum: {}", numbers.iter().sum()); }'
+```
+
+**Why it fails:** Shell history expansion (`!`), special characters, quote conflicts, and variable expansion issues make multi-line strings unreliable.
+
+### ❌ Forgetting to Quote
 
 ```bash
 #  Shell interprets this wrong
@@ -474,7 +638,7 @@ run python print('hello')
 run python "print('hello')"
 ```
 
-###  Wrong Quote Nesting
+### ❌ Wrong Quote Nesting
 
 ```bash
 #  Breaks on inner quotes
@@ -483,9 +647,14 @@ run python "print("hello")"
 #  Escape or mix quotes
 run python "print(\"hello\")"
 run python 'print("hello")'
+
+#  Or use heredoc (best)
+run python << 'EOF'
+print("hello")
+EOF
 ```
 
-###  Shell Variable Expansion
+### ❌ Shell Variable Expansion
 
 ```bash
 #  $x expands in shell, not Python
@@ -493,9 +662,15 @@ run python "x = 5; print($x)"
 
 #  Escape or use single quotes
 run python 'x = 5; print(x)'
+
+#  Or use heredoc (best)
+run python << 'EOF'
+x = 5
+print(x)
+EOF
 ```
 
-###  Ambiguous Auto-Detection
+### ❌ Ambiguous Auto-Detection
 
 ```bash
 #  Might detect as Python, Ruby, or Lua
@@ -507,11 +682,13 @@ run python "print('hello')"
 
 ## Best Practices
 
-1. **Be explicit in scripts** - Use `--lang` for deterministic behavior
-2. **Use heredoc for multiline** - Cleaner than escaping newlines
-3. **Quote defensively** - Always quote code strings
-4. **Test auto-detection** - Verify it chooses the right language
-5. **Check exit codes** - Don't ignore errors
+1. **Use heredoc for multi-line code** - Always prefer `<< 'EOF'` for reliability and readability
+2. **Use semicolons for short multi-statement code** - Good for quick one-liners: `"stmt1; stmt2; stmt3"`
+3. **Be explicit in scripts** - Use `--lang` for deterministic behavior in automation
+4. **Avoid multi-line strings** - They cause quoting and escaping issues
+5. **Quote defensively** - Always quote code strings
+6. **Test auto-detection** - Verify it chooses the right language
+7. **Check exit codes** - Don't ignore errors
 
 ## Examples
 
