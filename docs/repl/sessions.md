@@ -97,7 +97,7 @@ python>>> x = 100
 python>>> y = 200
 
 python>>> :reset
-Session reset.
+session for 'python' reset
 
 python>>> x
 NameError: name 'x' is not defined

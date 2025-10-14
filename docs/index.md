@@ -95,12 +95,6 @@ cargo install run-kit
 
 Installs the `run` binary from crates.io. Updating? Run `cargo install run-kit --force`.
 
-### Homebrew (macOS)
-
-```bash
-brew install --formula https://github.com/Esubaalew/run/releases/latest/download/homebrew-run.rb
-```
-
 ### Debian / Ubuntu
 
 ```bash
@@ -119,7 +113,7 @@ sudo apt install "./${DEB_FILE}"
 scoop install https://github.com/Esubaalew/run/releases/latest/download/run-scoop.json
 ```
 
-### Install script (macOS / Linux)
+### Install script (macOS / Linux / Ubuntu)
 
 ```bash
 curl -fsSLO https://raw.githubusercontent.com/Esubaalew/run/master/scripts/install.sh
@@ -206,9 +200,9 @@ Inside the REPL, you can use these commands:
 | Command | Purpose |
 | --- | --- |
 | `:help` | List available meta commands |
-| `:languages` | Show detected engines and status |
+| `:languages` | Show supported languages |
 | `:lang <id>` or `:<alias>` | Switch the active language (`:py`, `:go`, …) |
-| `:detect on/off/toggle` | Control snippet language auto-detection |
+| `:detect on/off` | Control snippet language auto-detection |
 | `:load path/to/file` | Execute a file inside the current session |
 | `:reset` | Clear the accumulated session state |
 | `:exit` / `:quit` | Leave the REPL |

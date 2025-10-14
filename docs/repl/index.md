@@ -4,7 +4,7 @@ The **REPL** (Read-Eval-Print Loop) is an interactive mode where you can execute
 
 ## Starting the REPL
 
-Simply run `run` without arguments:
+Simply run `run` without arguments. By default, it starts in Python mode:
 
 ```bash
 $ run
@@ -138,37 +138,27 @@ switched to go
 
 See all shortcuts with `:languages`.
 
-### Listing Available Languages
+### Listing Supported Languages
 
 ```bash
 >>> :languages
-Available language engines:
-✓ python (python, py, py3, python3)
-✓ javascript (javascript, js, node, nodejs)
-✓ rust (rust, rs)
-✓ go (go, golang)
-✗ haskell (haskell, hs, ghci) - not installed
-...
 ```
 
-✓ = Available  
-✗ = Not installed
+This displays a list of all languages that the run tool supports. Note that this list shows the languages supported by run, not which language runtimes are actually installed on your system.
 
 ### Getting Help
 
 ```bash
 >>> :help
-Available commands:
-  :help              - Show this help
-  :languages         - List available engines and their status
-  :lang <id>         - Switch to another language engine
-  :detect on|off|toggle - Toggle automatic language detection
-  :load <path>       - Execute a file in the current session
-  :reset             - Clear current session state
-  :exit, :quit       - Exit the REPL
-  
-Language shortcuts:
-  :py, :js, :rust, :go, :c, :cpp, :java, :rb, ...
+Commands:
+  :help                 Show this help message
+  :languages            List available languages
+  :lang <id>            Switch to language <id>
+  :detect on|off        Enable or disable auto language detection
+  :reset                Reset the current language session
+  :load <path>          Execute a file in the current language
+  :exit, :quit          Leave the REPL
+Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```
 
 ## Working with State
@@ -257,7 +247,7 @@ python>>> x
 100
 
 python>>> :reset
-Session reset.
+session for 'python' reset
 
 python>>> x
 NameError: name 'x' is not defined
@@ -269,13 +259,13 @@ Control automatic language detection:
 
 ```bash
 >>> :detect on
-Language auto-detection enabled
+auto-detect enabled
 
 >>> print('hello')  # Auto-detects as Python
 hello
 
 >>> :detect off
-Language auto-detection disabled
+auto-detect disabled
 
 >>> console.log('hello')  # Stays in current language
 ```
