@@ -59,17 +59,26 @@ run python "name = 'Alice'; print(f'Hello, {name}!')"
 
 ### Multi-line Code
 
+For multi-line code, **use heredoc for the best experience**:
+
 ```bash
-run python "
+run python << 'EOF'
 for i in range(5):
     print(f'Number: {i}')
-"
+EOF
 # Output:
 # Number: 0
 # Number: 1
 # Number: 2
 # Number: 3
 # Number: 4
+```
+
+For short multi-statement code, use semicolons:
+
+```bash
+run python "x = [1, 2, 3]; y = [i*2 for i in x]; print(y)"
+# Output: [2, 4, 6]
 ```
 
 ## File Execution
@@ -294,7 +303,8 @@ If you encounter issues with Python in run:
 - Check that Python is in your system PATH
 - For module import errors, install required packages: `pip install package_name`
 - Use quotes around code with special characters or spaces
-- For multi-line code, use proper indentation
+- **For multi-line code, always use heredoc** (`<< 'EOF'`) to avoid quoting issues
+- For multi-statement one-liners, use semicolons: `"stmt1; stmt2; stmt3"`
 - If REPL state seems corrupted, exit and restart the session
 
 ## Limitations

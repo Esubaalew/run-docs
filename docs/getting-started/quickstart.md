@@ -142,20 +142,9 @@ run "print('hello')"
 
 ## Variables and Multiple Statements
 
-You can write multi-line code using your shell's syntax:
+For multiple statements, you have three options:
 
-=== "Bash"
-
-    ```bash
-    run python "
-    x = 10
-    y = 20
-    print(f'Sum: {x + y}')
-    print(f'Product: {x * y}')
-    "
-    ```
-
-=== "Bash (Heredoc)"
+=== "Heredoc (Recommended)"
 
     ```bash
     run python << 'EOF'
@@ -165,12 +154,142 @@ You can write multi-line code using your shell's syntax:
     print(f'Product: {x * y}')
     EOF
     ```
+    
+    **Best for:** Multi-line code, complex scripts, code with quotes or special characters.
+    
+    **Why heredoc?** Most reliable - no quoting issues, no shell interpolation, handles newlines perfectly.
+
+=== "Inline with Semicolons"
+
+    ```bash
+    run python "x = 10; y = 20; print(f'Sum: {x + y}'); print(f'Product: {x * y}')"
+    ```
+    
+    **Best for:** Short one-liners with multiple statements.
+
+=== "Multi-line String"
+
+    ```bash
+    run python "
+    x = 10
+    y = 20
+    print(f'Sum: {x + y}')
+    print(f'Product: {x * y}')
+    "
+    ```
+    
+    **Works but risky:** Can have issues with quotes, special characters, or shell interpolation.
 
 Output:
 ```
 Sum: 30
 Product: 200
 ```
+
+!!! tip "Best Practice"
+    Use **heredoc** (`<< 'EOF'`) for any multi-line code. It's the most reliable method and prevents quoting and newline issues.
+
+!!! info "Alternative: Use REPL for One-liners"
+    For quick testing and one-line statements in any language, the REPL is also very reliable:
+    ```bash
+    $ run
+    >>> :rust
+    rust>>> fn main() { let x = vec![1,2,3]; println!("{:?}", x); }
+    ```
+    This works across all languages and avoids shell quoting issues entirely.
+
+### Real-World Examples: Why Heredoc Matters
+
+#### Example 1: Rust with Arrays (Shell History Expansion Issue)
+
+=== "Multi-line String (FAILS) ✗"
+
+    ```bash
+    run rust "
+    fn main() {
+        let numbers = vec![1, 2, 3, 4, 5];
+        let sum: i32 = numbers.iter().sum();
+        println!(\"Sum: {}\", sum);
+    }
+    "
+    ```
+    
+    **ERROR:** `zsh: event not found: [1,`
+    
+    The shell's history expansion (`!`) gets triggered by `[1,` causing immediate failure.
+
+=== "Heredoc (Works Perfectly) ✓"
+
+    ```bash
+    run rust << 'EOF'
+    fn main() {
+        let numbers = vec![1, 2, 3, 4, 5];
+        let sum: i32 = numbers.iter().sum();
+        println!("Sum: {}", sum);
+    }
+    EOF
+    ```
+    
+    **Output:** `Sum: 15`
+    
+    No errors, no escaping, quotes work naturally.
+
+=== "Single-line with Semicolons (Works) ✓"
+
+    ```bash
+    run rust 'fn main() { let numbers = vec![1,2,3,4,5]; let sum: i32 = numbers.iter().sum(); println!("Sum: {}", sum); }'
+    ```
+    
+    **Output:** `Sum: 15`
+    
+    Single quotes avoid shell issues. Good for one-liners.
+
+=== "REPL (Works) ✓"
+
+    ```bash
+    $ run
+    >>> :rust
+    rust>>> fn main() { let numbers = vec![1,2,3,4,5]; let sum: i32 = numbers.iter().sum(); println!("Sum: {}", sum); }
+    Sum: 15
+    ```
+    
+    REPL is also safe and works for one-line statements.
+
+#### Example 2: Python with Regex
+
+=== "Heredoc (Reliable) ✓"
+
+    ```bash
+    run python << 'EOF'
+    import re
+    text = 'Hello 123 World 456'
+    numbers = re.findall(r'\d+', text)
+    print(numbers)
+    EOF
+    ```
+    
+    **Works perfectly** - no escaping needed, handles quotes naturally.
+
+=== "Multi-line String (Problematic) ✗"
+
+    ```bash
+    run python "
+    import re
+    text = 'Hello 123 World 456'
+    numbers = re.findall(r'\d+', text)
+    print(numbers)
+    "
+    ```
+    
+    **Risky** - shell may interpret special characters, quotes can conflict.
+
+=== "Inline with Semicolons (OK) ✓"
+
+    ```bash
+    run python "import re; text = 'Hello 123 World 456'; numbers = re.findall(r'\d+', text); print(numbers)"
+    ```
+    
+    **Works for simple cases** - good for short scripts with multiple statements.
 
 ---
 

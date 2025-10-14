@@ -389,7 +389,9 @@ run --lang python "print('hello')"
 run "print('hello')"
 ```
 
-### 2. Use Heredoc for Multiline Code
+### 2. Use Heredoc for Multi-line Code (Recommended)
+
+**Always use heredoc for multi-line code** - it's the most reliable method:
 
 ```bash
 run python << 'EOF'
@@ -404,6 +406,19 @@ calc = Calculator()
 print("Sum:", calc.add(10, 5))
 print("Product:", calc.multiply(10, 5))
 EOF
+```
+
+**Why heredoc?**
+- No quoting issues
+- Handles newlines perfectly
+- Works with regex, special characters, and mixed quotes
+- Most readable and maintainable
+
+**Alternative for short multi-statement code:**
+
+```bash
+# Use semicolons for simple cases
+run python "x = 10; y = 20; print(f'Sum: {x + y}')"
 ```
 
 ### 3. Quote Properly
