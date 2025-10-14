@@ -14,6 +14,9 @@ run swiftlang "print(\"Hello\")"
 # Output: Hello (x2)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 Swift's REPL maintains state across commands. Variables, functions, and types persist within the same REPL session.

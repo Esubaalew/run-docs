@@ -51,6 +51,26 @@ EOF
 # Output: Hello, World!
 ```
 
+## Multi-line Code
+
+!!! tip "Best Practice: Use Heredoc"
+    For multi-line TypeScript, **use heredoc** to avoid shell quoting issues:
+    
+    ```bash
+    # RECOMMENDED
+    run typescript << 'EOF'
+    interface User {
+      name: string;
+      age: number;
+    }
+    const users: User[] = [{name: 'Alice', age: 30}];
+    console.log(users);
+    EOF
+    
+    # OK: Single-line
+    run ts "const x: number[] = [1,2,3]; console.log(x.map(n => n*2));"
+    ```
+
 ## REPL Behavior
 
 TypeScript's REPL is STATEFUL when using ts-node.

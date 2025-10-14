@@ -14,6 +14,9 @@ run ziglang "const std = @import(\"std\"); pub fn main() void { std.debug.print(
 # Output: Hello (x2)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 Zig's REPL maintains state across commands. Variables and functions persist within the same REPL session.

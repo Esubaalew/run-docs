@@ -43,6 +43,33 @@ run go "package main; import \"fmt\"; func main() { name := \"Alice\"; fmt.Print
 # Output: Hello, Alice!
 ```
 
+## Multi-line Code
+
+!!! tip "Best Practice: Use Heredoc for Multi-line Code"
+    For multi-line Go code, **use heredoc** to avoid shell quoting and escaping issues:
+    
+    ```bash
+    # RECOMMENDED: Heredoc
+    run go << 'EOF'
+    package main
+    import "fmt"
+    
+    func main() {
+        nums := []int{1, 2, 3, 4, 5}
+        sum := 0
+        for _, n := range nums {
+            sum += n
+        }
+        fmt.Printf("Sum: %d\n", sum)
+    }
+    EOF
+    
+    # OK: Single-line with semicolons
+    run go 'package main; import "fmt"; func main() { fmt.Println("Quick test") }'
+    
+    # AVOID: Multi-line strings (escaping hell)
+    ```
+
 ## File Execution
 
 Execute Go source files:

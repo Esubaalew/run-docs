@@ -19,6 +19,9 @@ run groovysh "println 'Hello'"
 # Output: Hello (x3)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## Basic Usage - Inline Code
 
 Execute Groovy code directly from the command line. Groovy's concise syntax makes it perfect for quick scripts:

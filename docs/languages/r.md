@@ -15,6 +15,9 @@ run cran "print('Hello')"
 # Output: [1] "Hello" (x3)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 R's REPL is STATEFUL - variables and functions persist across commands.

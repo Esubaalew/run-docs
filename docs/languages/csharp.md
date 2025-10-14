@@ -15,6 +15,9 @@ run dotnet "Console.WriteLine(\"Hello\");"
 # Output: Hello (x3)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 C#'s REPL maintains state across commands. Variables, classes, and methods persist within the same REPL session.

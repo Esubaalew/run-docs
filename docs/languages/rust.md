@@ -50,6 +50,32 @@ run rust "fn main() { let result = 10 + 20 * 3; println!(\"Result: {}\", result)
 # Output: Result: 70
 ```
 
+## Multi-line Code
+
+!!! warning "Important: Use Heredoc for Multi-line Code"
+    **Avoid multi-line strings** - they cause shell errors with Rust arrays:
+    
+    ```bash
+    # FAILS: zsh: event not found: [1,
+    run rust "
+    fn main() {
+        let nums = vec![1, 2, 3];
+        println!(\"{:?}\", nums);
+    }
+    "
+    
+    # WORKS: Use heredoc
+    run rust << 'EOF'
+    fn main() {
+        let nums = vec![1, 2, 3];
+        println!("{:?}", nums);
+    }
+    EOF
+    
+    # WORKS: Single-line
+    run rust 'fn main() { let nums = vec![1,2,3]; println!("{:?}", nums); }'
+    ```
+
 ## File Execution
 
 Execute Rust source files:

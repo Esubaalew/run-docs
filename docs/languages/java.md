@@ -15,6 +15,9 @@ run java "public class Main { public static void main(String[] args) { System.ou
 # Output: Hello, World!
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 Java's REPL maintains state across commands. Variables, classes, and methods persist within the same REPL session.

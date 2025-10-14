@@ -16,6 +16,9 @@ run iex "IO.puts \"Hello\""
 # Output: Hello (x4)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 Elixir's REPL (IEx) is STATEFUL - variables and modules persist across commands.

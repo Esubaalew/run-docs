@@ -14,6 +14,9 @@ run jl "println(\"Hello\")"
 # Output: Hello (x2)
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line code, **use heredoc** (`<< 'EOF'`) to avoid shell quoting and escaping issues.
+
 ## REPL Behavior
 
 Julia's REPL is STATEFUL - variables and functions persist across commands.

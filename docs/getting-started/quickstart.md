@@ -202,7 +202,7 @@ Product: 200
 
 #### Example 1: Rust with Arrays (Shell History Expansion Issue)
 
-=== "Multi-line String (FAILS) ✗"
+=== "Multi-line String (FAILS)"
 
     ```bash
     run rust "
@@ -218,7 +218,7 @@ Product: 200
     
     The shell's history expansion (`!`) gets triggered by `[1,` causing immediate failure.
 
-=== "Heredoc (Works Perfectly) ✓"
+=== "Heredoc (Works Perfectly)"
 
     ```bash
     run rust << 'EOF'
@@ -234,7 +234,7 @@ Product: 200
     
     No errors, no escaping, quotes work naturally.
 
-=== "Single-line with Semicolons (Works) ✓"
+=== "Single-line with Semicolons (Works)"
 
     ```bash
     run rust 'fn main() { let numbers = vec![1,2,3,4,5]; let sum: i32 = numbers.iter().sum(); println!("Sum: {}", sum); }'
@@ -244,7 +244,7 @@ Product: 200
     
     Single quotes avoid shell issues. Good for one-liners.
 
-=== "REPL (Works) ✓"
+=== "REPL (Works)"
 
     ```bash
     $ run
@@ -257,7 +257,7 @@ Product: 200
 
 #### Example 2: Python with Regex
 
-=== "Heredoc (Reliable) ✓"
+=== "Heredoc (Reliable)"
 
     ```bash
     run python << 'EOF'
@@ -270,7 +270,7 @@ Product: 200
     
     **Works perfectly** - no escaping needed, handles quotes naturally.
 
-=== "Multi-line String (Problematic) ✗"
+=== "Multi-line String (Problematic)"
 
     ```bash
     run python "
@@ -283,7 +283,7 @@ Product: 200
     
     **Risky** - shell may interpret special characters, quotes can conflict.
 
-=== "Inline with Semicolons (OK) ✓"
+=== "Inline with Semicolons (OK)"
 
     ```bash
     run python "import re; text = 'Hello 123 World 456'; numbers = re.findall(r'\d+', text); print(numbers)"
@@ -441,13 +441,7 @@ $ run
 
 You'll see output like:
 ```
-Available language engines:
-✓ python (python, py, py3, python3)
-✓ javascript (javascript, js, node, nodejs)
-✓ rust (rust, rs)
-✓ go (go, golang)
-✗ haskell (haskell, hs, ghci) - not installed
-...
+available languages: bash, c, cpp, crystal, csharp, dart, elixir, go, groovy, haskell, java, javascript, julia, kotlin, lua, nim, perl, php, python, r, ruby, rust, swift, typescript, zig
 ```
 
 ---

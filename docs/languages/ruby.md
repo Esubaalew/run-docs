@@ -45,6 +45,27 @@ run ruby "[1, 2, 3, 4, 5].each { |n| puts n * 2 }"
 # 10
 ```
 
+## Multi-line Code
+
+!!! tip "Best Practice: Use Heredoc"
+    For multi-line Ruby code, **use heredoc** to avoid quoting issues:
+    
+    ```bash
+    # RECOMMENDED: Heredoc
+    run ruby << 'EOF'
+    users = [
+      { name: 'Alice', age: 30 },
+      { name: 'Bob', age: 25 }
+    ]
+    users.each do |user|
+      puts "#{user[:name]}: #{user[:age]}"
+    end
+    EOF
+    
+    # OK: Single-line with semicolons
+    run ruby "arr = [1,2,3]; arr.each { |n| puts n * 2 }"
+    ```
+
 ## REPL Behavior
 
 Ruby's REPL is STATEFUL - variables and methods persist across commands.

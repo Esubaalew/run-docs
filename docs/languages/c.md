@@ -68,6 +68,9 @@ EOF
 # Output: 10
 ```
 
+!!! tip "Multi-line Code: Use Heredoc"
+    For multi-line C code, **always use heredoc** (`<< 'EOF'`) or pipe from stdin. This avoids shell quoting issues, escape sequences, and ensures your code works reliably.
+
 ## REPL Mode - Interactive C
 
 Start an interactive C REPL with 'run c'. The REPL is stateful within the session:
