@@ -80,7 +80,7 @@ echo '{"name":"Ada"}' | run js --code "const data = JSON.parse(require('fs').rea
 
 echo "Hello from stdin" | run python --code "import sys; print(sys.stdin.read().strip().upper())"
 
-echo "world" | run go --code 'import "fmt"; import "bufio"; import "os"; scanner := bufio.NewScanner(os.Stdin); scanner.Scan(); fmt.Printf("Hello, %s!\n", scanner.Text())'
+echo "world" | run go --code 'package main; import "fmt"; import "bufio"; import "os"; func main() { scanner := bufio.NewScanner(os.Stdin); scanner.Scan(); fmt.Printf("Hello, %s!\n", scanner.Text()) }'
 ```
 
 ## Installation
