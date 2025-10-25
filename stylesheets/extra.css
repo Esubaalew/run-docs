@@ -1,0 +1,232 @@
+/* Custom styles for run-kit documentation */
+
+:root {
+  --md-primary-fg-color: #4f46e5;
+  --md-primary-fg-color--light: #6366f1;
+  --md-primary-fg-color--dark: #4338ca;
+  --md-accent-fg-color: #4f46e5;
+}
+
+/* Hero section styling */
+.md-typeset h1 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Code blocks */
+.md-typeset code {
+  font-size: 0.85em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.25em;
+}
+
+.md-typeset pre > code {
+  padding: 1em;
+}
+
+/* Buttons */
+.md-button {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  transition: all 0.2s;
+}
+
+.md-button--primary {
+  background-color: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
+  color: white;
+}
+
+.md-button--primary:hover {
+  background-color: var(--md-primary-fg-color--dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.md-button:not(.md-button--primary) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Admonitions */
+.md-typeset .admonition {
+  border-left: 0.25rem solid;
+  border-radius: 0.5rem;
+  padding: 0 0.8rem;
+  margin: 1.5em 0;
+}
+
+/* Tables */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-default-fg-color--lightest);
+  font-weight: 700;
+}
+
+/* Tabs */
+.tabbed-set {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Links */
+.md-typeset a {
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.md-typeset a:hover {
+  border-bottom-color: var(--md-accent-fg-color);
+}
+
+/* Navigation */
+.md-tabs {
+  background-color: var(--md-primary-fg-color);
+}
+
+/* Footer */
+.md-footer {
+  background-color: var(--md-default-bg-color);
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Search */
+.md-search__input {
+  border-radius: 0.5rem;
+}
+
+/* Code annotations */
+.md-annotation {
+  font-weight: 600;
+}
+
+/* Badge styles */
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.6em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.375rem;
+}
+
+.badge-success {
+  background-color: #10b981;
+  color: white;
+}
+
+.badge-warning {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.badge-info {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 76.1875em) {
+  .md-nav--primary .md-nav__title {
+    background-color: var(--md-primary-fg-color);
+  }
+}
+
+/* Dark mode adjustments */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #1a1a1a;
+  --md-default-fg-color: #e4e4e7;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Command terminal styling */
+.terminal {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+}
+
+/* Inline code in headings */
+.md-typeset h1 code,
+.md-typeset h2 code,
+.md-typeset h3 code {
+  background-color: var(--md-code-bg-color);
+  padding: 0.1em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+}
+
+/* Fix sidebar overflow issues */
+.md-sidebar {
+  height: 100%;
+  max-height: calc(100vh - 3.6rem);
+  overflow: hidden;
+}
+
+.md-sidebar__scrollwrap {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--md-default-fg-color--lighter) transparent;
+}
+
+.md-sidebar__scrollwrap::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
+  background-color: var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+}
+
+.md-sidebar__scrollwrap::-webkit-scrollbar-thumb:hover {
+  background-color: var(--md-default-fg-color--light);
+}
+
+/* Ensure navigation items don't overflow */
+.md-nav {
+  overflow: visible;
+}
+
+.md-nav__list {
+  overflow: visible;
+}
+
+.md-nav__item {
+  overflow: visible;
+}
+
+/* Fix table of contents overflow */
+.md-sidebar--secondary {
+  max-height: calc(100vh - 3.6rem);
+}
+
+/* Ensure footer doesn't overlap */
+.md-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 2rem;
+}
+
+.md-main {
+  position: relative;
+  z-index: 0;
+}
+
