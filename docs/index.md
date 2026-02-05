@@ -29,6 +29,23 @@
 
 > Built in Rust for developers who live in multiple runtimes. `run` gives you a consistent CLI, persistent REPLs, and batteries-included examples for your favorite languages.
 
+---
+
+!!! tip "Run 2.0 - WASI Component Runtime"
+    **Run 2.0** adds experimental WASI 0.2 component support for cross-language composition, instant startup, and edge deployment.
+    
+    ```bash
+    # Install with v2 support
+    cargo install run-kit --features v2
+    
+    # Try it out
+    run v2 --help
+    ```
+    
+    [Learn more about Run 2.0](v2/index.md){ .md-button }
+
+---
+
 ## Overview
 
 run is a universal multi-language runner and smart REPL (Read-Eval-Print Loop) written in Rust. It provides a unified interface for executing code across 25 programming languages without the hassle of managing multiple compilers, interpreters, or build tools.

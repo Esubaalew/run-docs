@@ -19,9 +19,19 @@ Before installing `run`, ensure you have:
 
 If you have Rust installed, this is the simplest method:
 
-```bash
-cargo install run-kit
-```
+=== "Standard"
+
+    ```bash
+    cargo install run-kit
+    ```
+
+=== "With Run 2.0"
+
+    ```bash
+    cargo install run-kit --features v2
+    ```
+    
+    This includes WASI component support. See [Run 2.0 docs](../v2/index.md) for details.
 
 This will download, compile, and install `run` from [crates.io](https://crates.io/crates/run-kit).
 
@@ -29,6 +39,9 @@ This will download, compile, and install `run` from [crates.io](https://crates.i
 
 ```bash
 run --version
+
+# If installed with v2
+run v2 --help
 ```
 
 ---
