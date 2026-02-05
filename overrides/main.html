@@ -2,7 +2,7 @@
 
 {% block extrahead %}
   <!-- SEO Meta Tags -->
-  <meta name="description" content="{{ config.site_description }}">
+  <meta name="description" content="{% if page.meta and page.meta.description %}{{ page.meta.description }}{% else %}{{ config.site_description }}{% endif %}">
   <meta name="keywords" content="{{ config.extra.keywords }}">
   <meta name="author" content="{{ config.site_author }}">
   <meta name="robots" content="index, follow">
@@ -13,19 +13,16 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="{{ page.canonical_url }}">
   
-  <!-- Alternate URL (GitHub Pages backup) -->
-  <link rel="alternate" href="{{ page.canonical_url | replace('run.esubalew.et', 'esubaalew.github.io/run-docs') }}">
-  
   <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="{% if page.is_homepage %}website{% else %}article{% endif %}">
   <meta property="og:url" content="{{ page.canonical_url }}">
   <meta property="og:site_name" content="{{ config.site_name }}">
   <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}">
-  <meta property="og:description" content="{{ config.site_description }}">
+  <meta property="og:description" content="{% if page.meta and page.meta.description %}{{ page.meta.description }}{% else %}{{ config.site_description }}{% endif %}">
   <meta property="og:image" content="{{ config.site_url }}/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{{ config.site_name }} - Universal Multi-Language Runner">
+  <meta property="og:image:alt" content="{{ config.site_name }} - Universal REPL and WASI Runtime">
   <meta property="og:locale" content="en_US">
   
   <!-- X (Twitter) -->
@@ -34,9 +31,9 @@
   <meta name="twitter:creator" content="@esubaalew">
   <meta name="twitter:url" content="{{ page.canonical_url }}">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}">
-  <meta name="twitter:description" content="{{ config.site_description }}">
+  <meta name="twitter:description" content="{% if page.meta and page.meta.description %}{{ page.meta.description }}{% else %}{{ config.site_description }}{% endif %}">
   <meta name="twitter:image" content="{{ config.site_url }}/assets/og-image.png">
-  <meta name="twitter:image:alt" content="{{ config.site_name }} - Universal Multi-Language Runner">
+  <meta name="twitter:image:alt" content="{{ config.site_name }} - Universal REPL and WASI Runtime">
   
   <!-- LinkedIn -->
   <meta property="og:image:secure_url" content="{{ config.site_url }}/assets/og-image.png">
@@ -56,8 +53,8 @@
     "@type": "SoftwareApplication",
     "name": "run-kit",
     "alternateName": "run",
-    "description": "One command. 25 languages. A universal code runner and stateful REPL written in Rust.",
-    "url": "{{ config.site_url }}",
+    "description": "Universal REPL and WASI component runtime. Run 25+ languages, ship WASI 0.2 components, and publish to a registry.",
+    "url": "https://run.esubalew.dev",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Linux, macOS, Windows",
     "offers": {
@@ -68,17 +65,33 @@
     "author": {
       "@type": "Person",
       "name": "{{ config.site_author }}",
-      "url": "https://github.com/Esubaalew"
+      "url": "https://github.com/esubaalew"
     },
-    "softwareVersion": "0.2.0",
+    "softwareVersion": "0.4.1",
     "programmingLanguage": [
       "Python", "JavaScript", "TypeScript", "Rust", "Go", "C", "C++", "Java", "C#", "Ruby",
       "Bash", "PHP", "Lua", "Perl", "Groovy", "Swift", "Kotlin", "Dart", "R", "Haskell",
       "Elixir", "Julia", "Crystal", "Zig", "Nim"
     ],
-    "codeRepository": "{{ config.repo_url }}",
+    "codeRepository": "https://github.com/esubaalew/run",
     "license": "https://www.apache.org/licenses/LICENSE-2.0",
-    "keywords": "polyglot, multi-language runner, REPL, code execution, programming languages, developer tools"
+    "keywords": "universal repl, multi-language runner, wasi runtime, webassembly, component registry, polyglot, code execution"
+  }
+  </script>
+  
+  <!-- Schema.org JSON-LD for Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "run-kit",
+    "url": "https://run.esubalew.dev",
+    "logo": "https://run.esubalew.dev/assets/logo.png",
+    "sameAs": [
+      "https://github.com/esubaalew/run",
+      "https://x.com/esubaalew",
+      "https://linkedin.com/in/esubaalew"
+    ]
   }
   </script>
   
@@ -88,7 +101,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "{{ config.site_name }}",
-    "url": "{{ config.site_url }}",
+    "url": "https://run.esubalew.dev",
     "description": "{{ config.site_description }}",
     "author": {
       "@type": "Person",
@@ -96,34 +109,59 @@
     },
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "{{ config.site_url }}/search.html?q={search_term_string}",
+      "target": "https://run.esubalew.dev/?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   }
   </script>
   
+  <!-- Schema.org JSON-LD for BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://run.esubalew.dev/"
+      }
+      {% if page.title and not page.is_homepage %},
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ page.title }}",
+        "item": "{{ page.canonical_url }}"
+      }
+      {% endif %}
+    ]
+  }
+  </script>
+  
   <!-- Schema.org JSON-LD for TechArticle (Documentation) -->
+  {% if not page.is_homepage %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "{% if page.title %}{{ page.title }}{% else %}{{ config.site_name }} Documentation{% endif %}",
-    "description": "{{ config.site_description }}",
+    "description": "{% if page.meta and page.meta.description %}{{ page.meta.description }}{% else %}{{ config.site_description }}{% endif %}",
     "author": {
       "@type": "Person",
       "name": "{{ config.site_author }}"
     },
     "datePublished": "2024-01-01",
-    "dateModified": "{% if page and page.meta and page.meta.git_revision_date_localized %}{{ page.meta.git_revision_date_localized }}{% else %}2024-01-01{% endif %}",
+    "dateModified": "{% if page and page.meta and page.meta.git_revision_date_localized %}{{ page.meta.git_revision_date_localized }}{% else %}2025-02-05{% endif %}",
     "publisher": {
       "@type": "Organization",
       "name": "{{ config.site_name }}",
       "logo": {
         "@type": "ImageObject",
-        "url": "{{ config.site_url }}/assets/logo.png"
+        "url": "https://run.esubalew.dev/assets/logo.png"
       }
     }
   }
   </script>
+  {% endif %}
 {% endblock %}
-
