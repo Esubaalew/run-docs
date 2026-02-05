@@ -1,11 +1,11 @@
 site_name: run-kit
-site_description: One command. 25 languages. A universal code runner, stateful REPL, and WASI component runtime written in Rust.
+site_description: Universal REPL and WASI component runtime. Run 25+ languages, ship WASI 0.2 components, and publish to a registry.
 site_author: Esubalew Chekol
-site_url: https://run.esubalew.et
+site_url: https://run.esubalew.dev
 
-repo_name: Esubaalew/run
-repo_url: https://github.com/Esubaalew/run
-edit_uri: https://github.com/Esubaalew/run-docs/edit/main/docs/
+repo_name: esubaalew/run
+repo_url: https://github.com/esubaalew/run
+edit_uri: https://github.com/esubaalew/run-docs/edit/main/docs/
 
 copyright: Copyright &copy; 2025 Esubalew Chekol
 
@@ -14,6 +14,7 @@ theme:
   custom_dir: overrides
   logo: assets/logo.png
   favicon: assets/favicon.png
+  font: false
   
   palette:
     # Light mode
@@ -70,7 +71,7 @@ extra:
     property: !ENV GOOGLE_ANALYTICS_KEY
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/Esubaalew/run
+      link: https://github.com/esubaalew/run
       name: GitHub
     - icon: fontawesome/brands/x-twitter
       link: https://x.com/esubaalew
@@ -85,10 +86,10 @@ extra:
     provider: mike
   og_image: assets/og-image.png
   keywords: >-
-    run, run-kit, polyglot, multi-language runner, REPL, code execution, 
-    Python, JavaScript, TypeScript, Rust, Go, C, C++, Java, Ruby, PHP,
-    programming languages, code runner, universal runner, command line tool,
-    developer tools, scripting, compilation, interpreter, compiler
+    run, run-kit, universal repl, multi-language runner, code runner, wasm,
+    webassembly, wasi 0.2, component model, wasi runtime, wasm registry,
+    component registry, developer tools, cli, polyglot, online code runner,
+    programming languages, code execution, interpreter, compiler
 
 extra_css:
   - stylesheets/extra.css
@@ -124,7 +125,7 @@ markdown_extensions:
   - pymdownx.magiclink:
       normalize_issue_symbols: true
       repo_url_shorthand: true
-      user: Esubaalew
+      user: esubaalew
       repo: run
   - pymdownx.mark
   - pymdownx.smartsymbols
@@ -155,6 +156,9 @@ plugins:
       enable_creation_date: true
       type: timeago
       fallback_to_build_date: true
+  - sitemap:
+      changefreq: weekly
+      priority: 0.7
 
 nav:
   - Home: index.md
@@ -216,4 +220,3 @@ nav:
     - Architecture: about/architecture.md
     - Contributing: about/contributing.md
     - License: about/license.md
-

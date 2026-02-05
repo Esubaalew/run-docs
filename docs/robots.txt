@@ -1,9 +1,4 @@
 User-agent: *
 Allow: /
 
-# Primary sitemap (custom domain)
-Sitemap: https://run.esubalew.et/sitemap.xml
-
-# Backup sitemap (GitHub Pages)
-Sitemap: https://esubaalew.github.io/run-docs/sitemap.xml
-
+Sitemap: https://run.esubalew.dev/sitemap.xml
