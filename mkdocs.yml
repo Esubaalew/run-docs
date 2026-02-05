@@ -1,5 +1,5 @@
 site_name: run-kit
-site_description: One command. 25 languages. A universal code runner and stateful REPL written in Rust.
+site_description: One command. 25 languages. A universal code runner, stateful REPL, and WASI component runtime written in Rust.
 site_author: Esubalew Chekol
 site_url: https://run.esubalew.et
 
@@ -200,6 +200,14 @@ nav:
     - Crystal: languages/crystal.md
     - Zig: languages/zig.md
     - Nim: languages/nim.md
+  - Run 2.0:
+    - Overview: v2/index.md
+    - Installation: v2/installation.md
+    - Quickstart: v2/quickstart.md
+    - Commands: v2/commands.md
+    - Configuration: v2/configuration.md
+    - Registry: v2/registry.md
+    - Deployment: v2/deployment.md
   - Advanced:
     - Aliases: advanced/aliases.md
     - Environment Variables: advanced/environment.md
