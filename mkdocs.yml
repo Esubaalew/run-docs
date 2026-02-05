@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+
 site_name: run-kit
 site_description: Universal REPL and WASI component runtime. Run 25+ languages, ship WASI 0.2 components, and publish to a registry.
 site_author: Esubalew Chekol
@@ -156,9 +158,6 @@ plugins:
       enable_creation_date: true
       type: timeago
       fallback_to_build_date: true
-  - sitemap:
-      changefreq: weekly
-      priority: 0.7
 
 nav:
   - Home: index.md
