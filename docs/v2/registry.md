@@ -216,7 +216,7 @@ You can run your own registry server.
 |----------|-------------|
 | `PORT` | Server port |
 | `DATA_DIR` | Data storage directory |
-| `BASE_URL` | Public URL for download links |
+| `REGISTRY_URL` | Public base URL for download links (critical for hosted deploys) |
 | `MAX_UPLOAD_MB` | Max upload size (default: 50) |
 | `REGISTRY_ADMIN_TOKEN` | Admin token (can publish to any namespace) |
 | `REGISTRY_TOKENS` | Namespace tokens (format: `ns1:token1,ns2:token2`) |

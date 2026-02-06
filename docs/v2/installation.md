@@ -1,14 +1,21 @@
+---
+title: Installation
+description: Install Run with WASI 0.2 component support on macOS, Linux, or Windows.
+---
+
 # Installation
 
-Run 2.0 features are included when you install with the `v2` feature flag.
+Run 2.0 features are included when you install Run with the `v2` feature flag.
 
-## From crates.io
+## Install Run
+
+### From crates.io (recommended)
 
 ```bash
 cargo install run-kit --features v2
 ```
 
-## From Source
+### From source
 
 ```bash
 git clone https://github.com/esubaalew/run.git
@@ -16,61 +23,96 @@ cd run
 cargo install --path . --features v2
 ```
 
-## Verify Installation
+### Verify
 
 ```bash
-# Check version
 run --version
-
-# Check v2 commands
 run v2 --help
 ```
 
-You should see output like:
+You should see:
 
 ```
 Run 2.0 (Experimental) - WASI Universal Runtime
 
-USAGE:
-    run v2 <COMMAND> [OPTIONS]
-
 COMMANDS:
-    dev          Start development server (clock allowed, hot reload)
-    exec         Execute in production mode (strict determinism)
-    install      Install a WASI component
-    build        Build all components
-    test         Run component tests
-    deploy       Package and deploy components
-    publish      Publish component to registry
     init         Initialize a new project
-    ...
+    build        Build all components
+    dev          Start development server
+    exec         Execute in production mode
+    test         Run component tests
+    install      Install a WASI component
+    publish      Publish component to registry
+    deploy       Package and deploy components
+    info         Show project/component information
+    update       Update dependencies
+    verify       Verify lockfile integrity
+    clean        Clean build artifacts
+    compose      Docker Compose migration
+    toolchain    Manage toolchains
 ```
 
-## Prerequisites
+---
 
-Run 2.0 builds WASI components, which may require additional toolchains depending on the source language:
+## Required: wasm-tools
 
-| Language | Toolchain Required |
-|----------|-------------------|
-| Rust | `cargo-component` |
-| Python | `componentize-py` |
-| Go | `go` + `tinygo` |
-| JavaScript/TypeScript | `jco` |
-
-Install the Rust toolchain:
+`wasm-tools` is the standard WebAssembly toolchain for parsing, validating, and composing components:
 
 ```bash
-# Install cargo-component for Rust WASI components
-cargo install cargo-component
+cargo install wasm-tools
 ```
 
-## Toolchain Synchronization
-
-Run 2.0 can lock toolchain versions for reproducible builds:
+Verify:
 
 ```bash
-# Generate run.lock.toml with current toolchain versions
+wasm-tools --version
+```
+
+---
+
+## Language-Specific Toolchains
+
+You only need these if you're writing components in that language. **You do NOT need any of these to get started** — the quickstart uses WAT which only requires `wasm-tools`.
+
+| Language | Toolchain | Install |
+|----------|-----------|---------|
+| Rust | `cargo-component` | `cargo install cargo-component` |
+| Python | `componentize-py` | `pip install componentize-py` |
+| Go | TinyGo | [tinygo.org/getting-started](https://tinygo.org/getting-started/) |
+| JavaScript | `jco` | `npm install -g @bytecodealliance/jco` |
+| TypeScript | `jco` | `npm install -g @bytecodealliance/jco` |
+| Zig | Zig + wasm-tools | [ziglang.org/download](https://ziglang.org/download/) |
+
+---
+
+## Toolchain Locking
+
+For reproducible builds across machines (CI/CD, team collaboration), lock your toolchain versions:
+
+```bash
 run v2 toolchain sync
 ```
 
-This creates a `run.lock.toml` file that ensures consistent builds across machines.
+This creates `run.lock.toml` with exact versions:
+
+```toml
+[toolchains]
+cargo-component = "0.20.0"
+wasm-tools = "1.219.1"
+```
+
+Commit this file to version control.
+
+---
+
+## Updating
+
+```bash
+# Update Run itself
+cargo install run-kit --features v2 --force
+
+# Or from source
+cd run
+git pull
+cargo install --path . --features v2 --force
+```

@@ -107,11 +107,12 @@ path = "vendor/legacy.wasm"
 
 **Supported languages:**
 
-- `rust`
-- `python`
-- `go`
-- `javascript`
-- `typescript`
+- `rust` — via `cargo-component`
+- `python` — via `componentize-py`
+- `go` — via TinyGo + `wasm-tools`
+- `javascript` — via `jco`
+- `typescript` — via `jco`
+- `zig` — via Zig + `wasm-tools`
 
 ---
 

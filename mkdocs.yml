@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
-site_name: run-kit
-site_description: Universal REPL and WASI component runtime. Run 25+ languages, ship WASI 0.2 components, and publish to a registry.
+site_name: Run
+site_description: Universal code runner, WASI 0.2 component runtime, and package manager. Execute 25+ languages, build cross-language components, and deploy anywhere.
 site_author: Esubalew Chekol
 site_url: https://run.esubalew.dev
 
@@ -9,7 +9,7 @@ repo_name: esubaalew/run
 repo_url: https://github.com/esubaalew/run
 edit_uri: https://github.com/esubaalew/run-docs/edit/main/docs/
 
-copyright: Copyright &copy; 2025 Esubalew Chekol
+copyright: Copyright &copy; 2025-2026 Esubalew Chekol
 
 theme:
   name: material
@@ -210,6 +210,7 @@ nav:
     - Overview: v2/index.md
     - Installation: v2/installation.md
     - Quickstart: v2/quickstart.md
+    - Key Concepts: v2/concepts.md
     - Commands: v2/commands.md
     - Configuration: v2/configuration.md
     - Registry: v2/registry.md
