@@ -159,6 +159,9 @@ plugins:
       type: timeago
       fallback_to_build_date: true
 
+hooks:
+  - hooks/sitemap.py
+
 nav:
   - Home: index.md
   - Getting Started:
