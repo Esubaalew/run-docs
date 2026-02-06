@@ -1,3 +1,8 @@
+---
+title: Installation
+description: Install run-kit for macOS, Linux, Windows, and Docker. Get the universal REPL and WASI runtime running in minutes.
+---
+
 # Installation
 
 Get up and running with `run-kit` in minutes. Choose the installation method that works best for your system.
@@ -51,7 +56,7 @@ run v2 --help
 Download and install the `.deb` package:
 
 ```bash
-curl -LO https://github.com/Esubaalew/run/releases/latest/download/run_amd64.deb
+curl -LO https://github.com/esubaalew/run/releases/latest/download/run_amd64.deb
 sudo dpkg -i run_amd64.deb
 ```
 
@@ -68,7 +73,7 @@ run --version
 For Windows users with [Scoop](https://scoop.sh/):
 
 ```powershell
-scoop install https://github.com/Esubaalew/run/releases/latest/download/run-scoop.json
+scoop install https://github.com/esubaalew/run/releases/latest/download/run-scoop.json
 ```
 
 **Verify the installation:**
@@ -84,7 +89,7 @@ run --version
 Use the automated install script:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/Esubaalew/run/master/scripts/install.sh
+curl -fsSLO https://raw.githubusercontent.com/esubaalew/run/master/scripts/install.sh
 chmod +x install.sh
 ./install.sh --add-path
 ```
@@ -101,7 +106,7 @@ run --version
 
 Download pre-built binaries directly from GitHub:
 
-1. Go to the [Releases page](https://github.com/Esubaalew/run/releases)
+1. Go to the [Releases page](https://github.com/esubaalew/run/releases)
 2. Download the appropriate archive for your system:
    - `run-*-x86_64-apple-darwin.tar.gz` for macOS
    - `run-*-x86_64-unknown-linux-gnu.tar.gz` for Linux
@@ -129,7 +134,7 @@ run --version
 For the latest development version or to contribute:
 
 ```bash
-git clone https://github.com/Esubaalew/run.git
+git clone https://github.com/esubaalew/run.git
 cd run
 cargo build --release
 sudo cp target/release/run /usr/local/bin/
