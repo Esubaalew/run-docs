@@ -1,60 +1,101 @@
 {% extends "base.html" %}
 
 {% block extrahead %}
+  {{ super() }}
+  {% set site_url = (config.site_url.rstrip('/') if config.site_url else '') %}
+  {% set canonical_url = page.canonical_url if page and page.canonical_url else site_url %}
+  {% set page_title = (page.title ~ ' - ' ~ config.site_name) if page and page.title else config.site_name %}
+  {% set page_description = (page.meta.description if page.meta and page.meta.description else config.site_description) %}
+  {% set og_image_path = (config.extra.og_image if config.extra and config.extra.og_image else 'assets/og-image.png') %}
+  {% if og_image_path.startswith('http') %}
+    {% set og_image_url = og_image_path %}
+  {% else %}
+    {% set og_image_url = site_url ~ '/' ~ og_image_path.lstrip('/') %}
+  {% endif %}
+  {% set logo_path = (config.theme.logo if config.theme and config.theme.logo else 'assets/logo.png') %}
+  {% if logo_path.startswith('http') %}
+    {% set logo_url = logo_path %}
+  {% else %}
+    {% set logo_url = site_url ~ '/' ~ logo_path.lstrip('/') %}
+  {% endif %}
+  {% set repo_url = (config.repo_url if config.repo_url else 'https://github.com/esubaalew/run') %}
+  {% set published_raw = (page.meta.git_creation_date_localized if page.meta and page.meta.git_creation_date_localized else '') %}
+  {% set modified_raw = (page.meta.git_revision_date_localized if page.meta and page.meta.git_revision_date_localized else '') %}
+  {% set published_date = published_raw | striptags | trim %}
+  {% set modified_date = modified_raw | striptags | trim %}
+  {% if not published_date %}
+    {% set published_date = '2024-01-01' %}
+  {% endif %}
+  {% if not modified_date %}
+    {% set modified_date = '2025-02-05' %}
+  {% endif %}
+  {% if published_date|length > 10 %}
+    {% set published_date = published_date[-10:] %}
+  {% endif %}
+  {% if modified_date|length > 10 %}
+    {% set modified_date = modified_date[-10:] %}
+  {% endif %}
+  {% set search_path = 'search/' | url %}
+  {% set search_url = site_url ~ '/' ~ search_path.lstrip('/') %}
+
   <!-- SEO Meta Tags -->
-  <meta name="description" content="{% if page.meta and page.meta.description %}{{ page.meta.description }}{% else %}{{ config.site_description }}{% endif %}">
   <meta name="keywords" content="{{ config.extra.keywords }}">
-  <meta name="author" content="{{ config.site_author }}">
-  <meta name="robots" content="index, follow">
-  <meta name="googlebot" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="language" content="English">
   <meta name="revisit-after" content="7 days">
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="{{ page.canonical_url }}">
-  
+  <meta name="application-name" content="{{ config.site_name }}">
+  <meta name="apple-mobile-web-app-title" content="{{ config.site_name }}">
+  <meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ site_url }}/sitemap.xml">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="{% if page.is_homepage %}website{% else %}article{% endif %}">
-  <meta property="og:url" content="{{ page.canonical_url }}">
+  <meta property="og:url" content="{{ canonical_url }}">
   <meta property="og:site_name" content="{{ config.site_name }}">
-  <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}">
-  <meta property="og:description" content="{% if page.meta and page.meta.description %}{{ page.meta.description }}{% else %}{{ config.site_description }}{% endif %}">
-  <meta property="og:image" content="{{ config.site_url }}/assets/og-image.png">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:description" content="{{ page_description }}">
+  <meta property="og:image" content="{{ og_image_url }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="{{ config.site_name }} - Universal REPL and WASI Runtime">
+  <meta property="og:image:secure_url" content="{{ og_image_url }}">
   <meta property="og:locale" content="en_US">
-  
+  {% if not page.is_homepage %}
+  <meta property="article:published_time" content="{{ published_date }}">
+  <meta property="article:modified_time" content="{{ modified_date }}">
+  {% endif %}
+
   <!-- X (Twitter) -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@esubaalew">
   <meta name="twitter:creator" content="@esubaalew">
-  <meta name="twitter:url" content="{{ page.canonical_url }}">
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}">
-  <meta name="twitter:description" content="{% if page.meta and page.meta.description %}{{ page.meta.description }}{% else %}{{ config.site_description }}{% endif %}">
-  <meta name="twitter:image" content="{{ config.site_url }}/assets/og-image.png">
+  <meta name="twitter:url" content="{{ canonical_url }}">
+  <meta name="twitter:title" content="{{ page_title }}">
+  <meta name="twitter:description" content="{{ page_description }}">
+  <meta name="twitter:image" content="{{ og_image_url }}">
   <meta name="twitter:image:alt" content="{{ config.site_name }} - Universal REPL and WASI Runtime">
-  
+
   <!-- LinkedIn -->
-  <meta property="og:image:secure_url" content="{{ config.site_url }}/assets/og-image.png">
   <meta property="article:author" content="https://linkedin.com/in/esubaalew">
-  
+
   <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" sizes="180x180" href="{{ 'assets/apple-touch-icon.png' | url }}">
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="{{ 'assets/favicon.png' | url }}">
   <link rel="icon" type="image/svg+xml" href="{{ 'assets/favicon.svg' | url }}">
-  
+
   <!-- Schema.org JSON-LD for SoftwareApplication -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "run-kit",
+    "name": "{{ config.site_name }}",
     "alternateName": "run",
-    "description": "Universal REPL and WASI component runtime. Run 25+ languages, ship WASI 0.2 components, and publish to a registry.",
-    "url": "https://run.esubalew.dev",
+    "description": "{{ config.site_description }}",
+    "url": "{{ site_url }}",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Linux, macOS, Windows",
     "offers": {
@@ -67,41 +108,40 @@
       "name": "{{ config.site_author }}",
       "url": "https://github.com/esubaalew"
     },
-    "softwareVersion": "0.4.1",
     "programmingLanguage": [
       "Python", "JavaScript", "TypeScript", "Rust", "Go", "C", "C++", "Java", "C#", "Ruby",
       "Bash", "PHP", "Lua", "Perl", "Groovy", "Swift", "Kotlin", "Dart", "R", "Haskell",
       "Elixir", "Julia", "Crystal", "Zig", "Nim"
     ],
-    "codeRepository": "https://github.com/esubaalew/run",
+    "codeRepository": "{{ repo_url }}",
     "license": "https://www.apache.org/licenses/LICENSE-2.0",
-    "keywords": "universal repl, multi-language runner, wasi runtime, webassembly, component registry, polyglot, code execution"
+    "keywords": "{{ config.extra.keywords }}"
   }
   </script>
-  
+
   <!-- Schema.org JSON-LD for Organization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "run-kit",
-    "url": "https://run.esubalew.dev",
-    "logo": "https://run.esubalew.dev/assets/logo.png",
+    "name": "{{ config.site_name }}",
+    "url": "{{ site_url }}",
+    "logo": "{{ logo_url }}",
     "sameAs": [
-      "https://github.com/esubaalew/run",
+      "{{ repo_url }}",
       "https://x.com/esubaalew",
       "https://linkedin.com/in/esubaalew"
     ]
   }
   </script>
-  
+
   <!-- Schema.org JSON-LD for WebSite -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "{{ config.site_name }}",
-    "url": "https://run.esubalew.dev",
+    "url": "{{ site_url }}",
     "description": "{{ config.site_description }}",
     "author": {
       "@type": "Person",
@@ -109,12 +149,12 @@
     },
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://run.esubalew.dev/?q={search_term_string}",
+      "target": "{{ search_url }}?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   }
   </script>
-  
+
   <!-- Schema.org JSON-LD for BreadcrumbList -->
   <script type="application/ld+json">
   {
@@ -125,20 +165,20 @@
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://run.esubalew.dev/"
+        "item": "{{ site_url }}/"
       }
       {% if page.title and not page.is_homepage %},
       {
         "@type": "ListItem",
         "position": 2,
         "name": "{{ page.title }}",
-        "item": "{{ page.canonical_url }}"
+        "item": "{{ canonical_url }}"
       }
       {% endif %}
     ]
   }
   </script>
-  
+
   <!-- Schema.org JSON-LD for TechArticle (Documentation) -->
   {% if not page.is_homepage %}
   <script type="application/ld+json">
@@ -146,19 +186,29 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "{% if page.title %}{{ page.title }}{% else %}{{ config.site_name }} Documentation{% endif %}",
-    "description": "{% if page.meta and page.meta.description %}{{ page.meta.description }}{% else %}{{ config.site_description }}{% endif %}",
+    "description": "{{ page_description }}",
     "author": {
       "@type": "Person",
       "name": "{{ config.site_author }}"
     },
-    "datePublished": "2024-01-01",
-    "dateModified": "{% if page and page.meta and page.meta.git_revision_date_localized %}{{ page.meta.git_revision_date_localized }}{% else %}2025-02-05{% endif %}",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ canonical_url }}"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "{{ config.site_name }}",
+      "url": "{{ site_url }}"
+    },
+    "inLanguage": "en",
+    "datePublished": "{{ published_date }}",
+    "dateModified": "{{ modified_date }}",
     "publisher": {
       "@type": "Organization",
       "name": "{{ config.site_name }}",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://run.esubalew.dev/assets/logo.png"
+        "url": "{{ logo_url }}"
       }
     }
   }

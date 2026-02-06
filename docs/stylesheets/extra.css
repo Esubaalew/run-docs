@@ -153,6 +153,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Prevent anchored headings from hiding under the sticky header */
+.md-typeset :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 5rem;
+}
+
 /* Command terminal styling */
 .terminal {
   background-color: #1e1e1e;
@@ -229,4 +234,3 @@ html {
   position: relative;
   z-index: 0;
 }
-
