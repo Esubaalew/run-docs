@@ -79,7 +79,7 @@ Maintains session state for interactive mode.
 
 ## More Details
 
-For complete implementation details, see the [source code](https://github.com/Esubaalew/run).
+For complete implementation details, see the [source code](https://github.com/esubaalew/run).
 
 ## Next Steps
 

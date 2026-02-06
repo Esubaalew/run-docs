@@ -1,3 +1,8 @@
+---
+title: Index
+description: REPL guide for run-kit with language switching, persistent sessions, and interactive workflows.
+---
+
 # REPL Mode
 
 The **REPL** (Read-Eval-Print Loop) is an interactive mode where you can execute code line-by-line, experiment with ideas, and maintain state across commands.
@@ -349,7 +354,7 @@ javascript>>> [1, 2, 3].map(x => x * 2)
 python>>> import json
 python>>> import urllib.request
 
-python>>> url = "https://api.github.com/repos/Esubaalew/run"
+python>>> url = "https://api.github.com/repos/esubaalew/run"
 python>>> response = urllib.request.urlopen(url)
 python>>> data = json.loads(response.read())
 

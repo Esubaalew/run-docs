@@ -10,8 +10,8 @@ description: Run is a universal REPL for 25+ languages and a WASI 0.2 component 
 </p>
 
 <p align="center">
-  <a href="https://github.com/Esubaalew/run/releases/latest">
-    <img src="https://img.shields.io/github/v/release/Esubaalew/run?style=flat-square&color=orange&logo=github" alt="Latest release" />
+  <a href="https://github.com/esubaalew/run/releases/latest">
+    <img src="https://img.shields.io/github/v/release/esubaalew/run?style=flat-square&color=orange&logo=github" alt="Latest release" />
   </a>
   <img src="https://img.shields.io/badge/release-passing-brightgreen?style=flat-square" alt="Release passing" />
   <a href="https://docs.rs/run-kit">
@@ -20,14 +20,14 @@ description: Run is a universal REPL for 25+ languages and a WASI 0.2 component 
   <a href="https://crates.io/crates/run-kit">
     <img src="https://img.shields.io/crates/v/run-kit.svg?style=flat-square&logo=rust&color=red" alt="crates.io" />
   </a>
-  <a href="https://github.com/Esubaalew/run/releases">
-    <img src="https://img.shields.io/github/downloads/Esubaalew/run/total?style=flat-square&color=blue" alt="Downloads" />
+  <a href="https://github.com/esubaalew/run/releases">
+    <img src="https://img.shields.io/github/downloads/esubaalew/run/total?style=flat-square&color=blue" alt="Downloads" />
   </a>
-  <a href="https://github.com/Esubaalew/run/stargazers">
-    <img src="https://img.shields.io/github/stars/Esubaalew/run?style=flat-square&color=yellow" alt="GitHub stars" />
+  <a href="https://github.com/esubaalew/run/stargazers">
+    <img src="https://img.shields.io/github/stars/esubaalew/run?style=flat-square&color=yellow" alt="GitHub stars" />
   </a>
   <img src="https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey?style=flat-square" alt="Platform support" />
-  <a href="https://github.com/Esubaalew/run/blob/master/LICENSE">
+  <a href="https://github.com/esubaalew/run/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square" alt="License" />
   </a>
 </p>
@@ -107,7 +107,7 @@ echo "world" | run go --code 'package main; import "fmt"; import "bufio"; import
 
 ## Installation
 
-All release assets are published on the [GitHub Releases](https://github.com/Esubaalew/run/releases) page. Choose the method that works best for your system:
+All release assets are published on the [GitHub Releases](https://github.com/esubaalew/run/releases) page. Choose the method that works best for your system:
 
 ### Cargo (Rust)
 
@@ -121,10 +121,10 @@ Installs the `run` binary from crates.io. Updating? Run `cargo install run-kit -
 
 ```bash
 ARCH=${ARCH:-amd64}
-DEB_FILE=$(curl -s https://api.github.com/repos/Esubaalew/run/releases/latest \
+DEB_FILE=$(curl -s https://api.github.com/repos/esubaalew/run/releases/latest \
   | grep -oE "run_[0-9.]+_${ARCH}\\.deb" | head -n 1)
-curl -LO "https://github.com/Esubaalew/run/releases/latest/download/${DEB_FILE}"
-curl -LO "https://github.com/Esubaalew/run/releases/latest/download/${DEB_FILE}.sha256"
+curl -LO "https://github.com/esubaalew/run/releases/latest/download/${DEB_FILE}"
+curl -LO "https://github.com/esubaalew/run/releases/latest/download/${DEB_FILE}.sha256"
 sha256sum --check "${DEB_FILE}.sha256"
 sudo apt install "./${DEB_FILE}"
 ```
@@ -132,13 +132,13 @@ sudo apt install "./${DEB_FILE}"
 ### Windows (Scoop)
 
 ```powershell
-scoop install https://github.com/Esubaalew/run/releases/latest/download/run-scoop.json
+scoop install https://github.com/esubaalew/run/releases/latest/download/run-scoop.json
 ```
 
 ### Install script (macOS / Linux / Ubuntu)
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/Esubaalew/run/master/scripts/install.sh
+curl -fsSLO https://raw.githubusercontent.com/esubaalew/run/master/scripts/install.sh
 chmod +x install.sh
 ./install.sh --add-path
 ```
@@ -146,7 +146,7 @@ chmod +x install.sh
 ### Build from source
 
 ```bash
-git clone https://github.com/Esubaalew/run.git
+git clone https://github.com/esubaalew/run.git
 cd run
 cargo install --path .
 ```
@@ -231,4 +231,4 @@ Inside the REPL, you can use these commands:
 
 ## License
 
-Apache 2.0. See [LICENSE](https://github.com/Esubaalew/run/blob/master/LICENSE) for details.
+Apache 2.0. See [LICENSE](https://github.com/esubaalew/run/blob/master/LICENSE) for details.

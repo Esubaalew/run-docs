@@ -1,3 +1,8 @@
+---
+title: Index
+description: Run 2.0 overview: WASI 0.2 component runtime, registry, and deployment workflow.
+---
+
 # Run 2.0 - WASI Component Runtime
 
 Run 2.0 is an **experimental** extension that adds WASI 0.2 component support to Run. It enables cross-language composition, instant startup, hermetic builds, and edge deployment.

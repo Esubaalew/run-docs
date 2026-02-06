@@ -1,3 +1,8 @@
+---
+title: Registry
+description: Publish and install WASI components with the run-kit registry, auth tokens, and versioning.
+---
+
 # Component Registry
 
 The Run 2.0 registry allows you to publish, share, and install WASI components.
@@ -197,7 +202,7 @@ You can run your own registry server.
 
 ### Deploy to Render
 
-1. Fork the [run repository](https://github.com/Esubaalew/run)
+1. Fork the [run repository](https://github.com/esubaalew/run)
 2. Create a new Web Service on [Render](https://render.com)
 3. Connect to the `registry-server/` directory
 4. Set environment variables:

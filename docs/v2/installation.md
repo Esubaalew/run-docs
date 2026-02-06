@@ -11,7 +11,7 @@ cargo install run-kit --features v2
 ## From Source
 
 ```bash
-git clone https://github.com/Esubaalew/run.git
+git clone https://github.com/esubaalew/run.git
 cd run
 cargo install --path . --features v2
 ```

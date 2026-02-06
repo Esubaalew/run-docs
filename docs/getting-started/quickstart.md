@@ -1,3 +1,8 @@
+---
+title: Quickstart
+description: Quickstart guide to run code across 25+ languages and test Run 2.0 WASI components with a single CLI.
+---
+
 # Quickstart
 
 Get started with `run` in under 5 minutes. This guide shows you the basics of executing code across multiple languages.
@@ -493,7 +498,7 @@ run-kit 0.2.1
 Universal multi-language runner and smart REPL
 author: Esubalew Chekol <esubalewchekol6@gmail.com>
 homepage: https://esubalew.et
-repository: https://github.com/Esubaalew/run
+repository: https://github.com/esubaalew/run
 license: Apache-2.0
 ```
 

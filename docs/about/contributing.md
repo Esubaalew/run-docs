@@ -6,7 +6,7 @@ Thank you for considering contributing to `run`! We welcome contributions of all
 
 ### 1. Report Bugs
 
-Found a bug? [Open an issue](https://github.com/Esubaalew/run/issues/new) with:
+Found a bug? [Open an issue](https://github.com/esubaalew/run/issues/new) with:
 
 - Description of the issue
 - Steps to reproduce
@@ -15,7 +15,7 @@ Found a bug? [Open an issue](https://github.com/Esubaalew/run/issues/new) with:
 
 ### 2. Suggest Features
 
-Have an idea? [Open a feature request](https://github.com/Esubaalew/run/issues/new) with:
+Have an idea? [Open a feature request](https://github.com/esubaalew/run/issues/new) with:
 
 - Description of the feature
 - Use cases
@@ -34,14 +34,14 @@ Documentation can always be better:
 
 Want to add a new language?
 
-1. Check the [language engine interface](https://github.com/Esubaalew/run/blob/master/src/engine.rs)
+1. Check the [language engine interface](https://github.com/esubaalew/run/blob/master/src/engine.rs)
 2. Implement the trait for your language
 3. Add tests
 4. Submit a PR
 
 ### 5. Fix Bugs
 
-Browse [open issues](https://github.com/Esubaalew/run/issues) and submit fixes!
+Browse [open issues](https://github.com/esubaalew/run/issues) and submit fixes!
 
 ## Development Setup
 
@@ -54,7 +54,7 @@ Browse [open issues](https://github.com/Esubaalew/run/issues) and submit fixes!
 ### Clone and Build
 
 ```bash
-git clone https://github.com/Esubaalew/run.git
+git clone https://github.com/esubaalew/run.git
 cd run
 cargo build
 cargo test
@@ -104,7 +104,7 @@ test: add tests for Rust REPL
 
 ## Questions?
 
-- [GitHub Discussions](https://github.com/Esubaalew/run/discussions)
+- [GitHub Discussions](https://github.com/esubaalew/run/discussions)
 - [X (Twitter)](https://x.com/esubaalew)
 
 ## License

@@ -43,12 +43,12 @@ limitations under the License.
 
 The full Apache 2.0 license text is available at:
 - [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
-- [LICENSE file in repository](https://github.com/Esubaalew/run/blob/master/LICENSE)
+- [LICENSE file in repository](https://github.com/esubaalew/run/blob/master/LICENSE)
 
 ## Dependencies
 
-`run` uses several open-source dependencies, each with their own licenses. See [Cargo.toml](https://github.com/Esubaalew/run/blob/master/Cargo.toml) for the complete list.
+`run` uses several open-source dependencies, each with their own licenses. See [Cargo.toml](https://github.com/esubaalew/run/blob/master/Cargo.toml) for the complete list.
 
 ## Questions?
 
-For licensing questions, open an issue on [GitHub](https://github.com/Esubaalew/run/issues).
+For licensing questions, open an issue on [GitHub](https://github.com/esubaalew/run/issues).

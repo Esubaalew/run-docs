@@ -215,7 +215,7 @@ data = {
     'name': 'run',
     'version': '1.0',
     'languages': 25,
-    'author': 'Esubaalew'
+    'author': 'esubaalew'
 }
 print(json.dumps(data, indent=2))
 "
