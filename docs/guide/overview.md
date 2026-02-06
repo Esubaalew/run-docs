@@ -72,10 +72,20 @@ run supports 25+ languages across multiple categories:
 - **Piped Input Support**: Process stdin data in any language
 - **Interactive REPL Mode**: Stateful sessions with persistent variables and functions
 - **Language Switching**: Switch between languages on the fly in REPL mode
-- **Variable Persistence**: Variables and functions persist per language session
+- **Variable Persistence**: Variables and functions persist per language session, including `:load`
+- **Tab Completion**: Complete language keywords, session variables, meta commands, and file paths
+- **Advanced REPL**: `_` last-result variable, execution timing, session history
+- **Compilation Cache**: Compiled languages (Rust, C, C++, Go, Java, Kotlin, Zig) skip recompilation on repeated runs
+- **Benchmarking**: `--bench N` flag and `:bench` REPL command for execution timing statistics
+- **File Watching**: `--watch` re-executes a file automatically on every save
+- **Package Installation**: Install packages for any language via `--install` or `:install` in REPL
+- **Toolchain Verification**: `--check` shows which language runtimes are installed
+- **Execution Timeout**: `--timeout` prevents runaway processes, with configurable limits
+- **Execution Timing**: `--timing` shows how long each execution takes
+- **Session History**: `:history` and `:save` commands for reviewing and exporting sessions
+- **Project Config**: `run.toml` / `.runrc` for default language, timeout, and timing settings
 - **Main Function Auto-wrapping**: Compiled languages work with or without main functions
 - **Cross-platform Support**: Works on Windows, macOS, and Linux
-- **Zero Configuration**: No setup files or configuration needed
 - **Fast Startup**: Written in Rust for instant execution
 - **Minimal Memory Footprint**: Efficient resource usage
 

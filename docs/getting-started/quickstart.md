@@ -347,17 +347,6 @@ For longer sessions, use the interactive mode. By default, `run` starts in Pytho
 $ run
 run universal REPL. Type :help for commands.
 
->>> :help
-Commands:
-  :help                 Show this help message
-  :languages            List available languages
-  :lang <id>            Switch to language <id>
-  :detect on|off        Enable or disable auto language detection
-  :reset                Reset the current language session
-  :load <path>          Execute a file in the current language
-  :exit, :quit          Leave the REPL
-Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
-
 >>> :py
 switched to python
 
@@ -367,9 +356,13 @@ python>>> y = 20
 
 python>>> x + y
 30
+⏱ 12ms
+
+python>>> _
+30
 
 python>>> :exit
-Goodbye!
+bye
 ```
 
 !!! success "Stateful Sessions"
@@ -437,16 +430,57 @@ Sum: 15
 
 ## Checking Available Languages
 
-See which languages are available on your system:
+Use `--check` to see which language toolchains are installed:
+
+```bash
+$ run --check
+Checking language toolchains...
+
+  [ OK ] Bash           bash
+  [ OK ] Python         python
+  [ OK ] JavaScript     javascript
+  [ OK ] Rust           rust
+  [MISS] Swift          swift
+  ...
+
+  22 available, 3 missing, 25 total
+```
+
+Or from the REPL:
 
 ```bash
 $ run
 >>> :languages
+available languages: bash, c, cpp, crystal, csharp, dart, elixir, go, groovy, haskell, java, javascript, julia, kotlin, lua, nim, perl, php, python, r, ruby, rust, swift, typescript, zig
 ```
 
-You'll see output like:
+---
+
+## Installing Packages
+
+Install packages for any language directly from the CLI:
+
+```bash
+# Install a Python package
+run --install numpy -l python
+
+# Install an npm package
+run --install lodash -l js
+
+# Install a Ruby gem
+run --install nokogiri -l ruby
 ```
-available languages: bash, c, cpp, crystal, csharp, dart, elixir, go, groovy, haskell, java, javascript, julia, kotlin, lua, nim, perl, php, python, r, ruby, rust, swift, typescript, zig
+
+Or from the REPL:
+
+```bash
+python>>> :install requests
+[run] Installing 'requests' for python...
+[run] Successfully installed 'requests'
+
+python>>> import requests
+python>>> requests.get('https://httpbin.org/get').status_code
+200
 ```
 
 ---
@@ -465,12 +499,16 @@ Arguments:
   [ARGS]...  Positional arguments (language, code, or file)
 
 Options:
-  -V, --version      Print version information and exit
-  -l, --lang <LANG>  Explicitly choose the language to execute
-  -f, --file <PATH>  Execute code from the provided file path
-  -c, --code <CODE>  Execute the provided code snippet
-      --no-detect    Disable heuristic language detection
-  -h, --help         Print help
+  -V, --version          Print version information and exit
+  -l, --lang <LANG>      Explicitly choose the language to execute
+  -f, --file <PATH>      Execute code from the provided file path
+  -c, --code <CODE>      Execute the provided code snippet
+      --no-detect        Disable heuristic language detection
+      --timeout <SECS>   Maximum execution time in seconds (default: 60)
+      --timing           Show execution timing after each run
+      --check            Check which language toolchains are available
+      --install <PKG>    Install a package for a language (use -l to specify)
+  -h, --help             Print help
 ```
 
 ### REPL Help
@@ -485,6 +523,9 @@ Commands:
   :detect on|off        Enable or disable auto language detection
   :reset                Reset the current language session
   :load <path>          Execute a file in the current language
+  :save <path>          Save session history to a file
+  :history [n]          Show last n entries (default: 25)
+  :install <pkg>        Install a package for the current language
   :exit, :quit          Leave the REPL
 Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```
@@ -494,7 +535,7 @@ Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```bash
 $ run --version
 
-run-kit 0.2.1
+run-kit 0.4.1
 Universal multi-language runner and smart REPL
 author: Esubalew Chekol <esubalewchekol6@gmail.com>
 homepage: https://esubalew.et

@@ -62,12 +62,18 @@ Arguments:
   [ARGS]...  Positional arguments (language, code, or file)
 
 Options:
-  -V, --version      Print version information and exit
-  -l, --lang <LANG>  Explicitly choose the language to execute
-  -f, --file <PATH>  Execute code from the provided file path
-  -c, --code <CODE>  Execute the provided code snippet
-      --no-detect    Disable heuristic language detection
-  -h, --help         Print help
+  -V, --version        Print version information and exit
+  -l, --lang <LANG>    Explicitly choose the language to execute
+  -f, --file <PATH>    Execute code from the provided file path
+  -c, --code <CODE>    Execute the provided code snippet
+  -w, --watch          Watch a file and re-execute on changes
+      --bench <N>      Benchmark: run code N times and report stats
+      --timeout <SECS> Maximum execution time in seconds (default: 60)
+      --timing         Show execution timing after each run
+      --check          Check which language toolchains are available
+      --install <PKG>  Install a package for the specified language
+      --no-detect      Disable heuristic language detection
+  -h, --help           Print help
 ```
 
 ### Language Specification (`-l, --lang`)
@@ -129,6 +135,37 @@ run -f script.py
 run --lang python script.py
 run python script.py
 ```
+
+### File Watching (`-w, --watch`)
+
+Re-execute a file automatically whenever it changes on disk. Polls every 300ms for modifications.
+
+```bash
+# Watch a Python script
+run --watch script.py
+
+# Watch with explicit language
+run -w -l python script.py
+
+# Short form
+run python -w script.py
+```
+
+Press `Ctrl+C` to stop watching.
+
+### Benchmarking (`--bench`)
+
+Run code N times and report execution time statistics:
+
+```bash
+# Benchmark 10 iterations
+run python --bench 10 -c "sum(range(100000))"
+
+# Benchmark a file
+run --bench 5 script.py
+```
+
+Output includes warmup, per-run timing, and statistical summary (min, max, avg, median, stddev).
 
 ### Disable Detection (`--no-detect`)
 
