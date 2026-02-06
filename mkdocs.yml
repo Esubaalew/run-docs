@@ -217,6 +217,7 @@ nav:
     - Deployment: v2/deployment.md
   - Advanced:
     - Aliases: advanced/aliases.md
+    - Configuration: advanced/config.md
     - Environment Variables: advanced/environment.md
   - About:
     - Why Rust?: about/why-rust.md

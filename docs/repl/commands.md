@@ -10,7 +10,12 @@ Complete reference for all REPL meta-commands. These commands start with `:` and
 | `:languages` | List available languages |
 | `:lang <id>` | Switch to a language |
 | `:detect on\|off` | Control auto-detection |
-| `:load <path>` | Execute a file |
+| `:load <path>` | Execute a file (persists variables) |
+| `:save <path>` | Save session history to file |
+| `:history [n]` | Show last n history entries |
+| `:install <pkg>` | Install a package for current language |
+| `:bench [N] <code>` | Benchmark code N times (default 5) |
+| `:type` / `:which` | Show active language and session state |
 | `:reset` | Clear session state |
 | `:exit` / `:quit` | Exit the REPL |
 
@@ -35,6 +40,9 @@ Commands:
   :detect on|off        Enable or disable auto language detection
   :reset                Reset the current language session
   :load <path>          Execute a file in the current language
+  :save <path>          Save session history to a file
+  :history [n]          Show last n entries (default: 25)
+  :install <pkg>        Install a package for the current language
   :exit, :quit          Leave the REPL
 Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```
@@ -189,7 +197,7 @@ auto-detect disabled
 
 ## `:load <path>`
 
-Execute a file in the current REPL session. The file's contents are run as if you typed them line-by-line.
+Load and execute a file in the current REPL session. Variables, functions, and classes defined in the file **persist in the session** -- you can use them immediately after loading. For languages with session support (Python, JavaScript), the file contents are fed through the session evaluator. Tab completion for file paths is available.
 
 ### Usage
 
@@ -277,6 +285,230 @@ python>>> :load models.py
 2. **Import configurations**
 3. **Test modules in development**
 4. **Load data processing scripts**
+
+---
+
+## `:save <path>`
+
+Save all session history (commands you've entered) to a file. Useful for capturing an interactive session as a reusable script.
+
+### Usage
+
+```bash
+>>> :save <file_path>
+```
+
+### Parameters
+
+- `<file_path>` - Path to save the history to (relative or absolute)
+
+### Examples
+
+```bash
+python>>> x = 10
+python>>> y = 20
+python>>> print(x + y)
+30
+
+python>>> :save session.py
+[saved 3 entries to session.py]
+```
+
+The saved file contains your code:
+
+```python title="session.py"
+x = 10
+y = 20
+print(x + y)
+```
+
+### Use Cases
+
+1. **Capture exploratory work** as a reusable script
+2. **Save debugging sessions** for later reference
+3. **Export REPL experiments** to proper source files
+
+---
+
+## `:history [n]`
+
+Show recent command history. Defaults to the last 25 entries.
+
+### Usage
+
+```bash
+>>> :history        # Show last 25 entries
+>>> :history 10     # Show last 10 entries
+```
+
+### Parameters
+
+- `[n]` - Optional number of entries to show (default: 25)
+
+### Example
+
+```bash
+python>>> x = 10
+python>>> y = 20
+python>>> x + y
+30
+
+python>>> :history
+[   1] x = 10
+[   2] y = 20
+[   3] x + y
+```
+
+Multi-line entries are shown with a continuation indicator:
+
+```bash
+python>>> :history
+[   1] def fib(n): (...)
+[   2] fib(10)
+```
+
+---
+
+## `:install <pkg>`
+
+Install a package using the current language's native package manager. Delegates to `pip`, `npm`, `gem`, `cargo`, etc. based on the active language.
+
+### Usage
+
+```bash
+>>> :install <package_name>
+```
+
+### Parameters
+
+- `<package_name>` - The package to install
+
+### Examples
+
+**Python (uses pip):**
+
+```bash
+python>>> :install requests
+[run] Installing 'requests' for python...
+[run] Successfully installed 'requests'
+
+python>>> import requests
+python>>> requests.get('https://httpbin.org/get').status_code
+200
+```
+
+**JavaScript (uses npm):**
+
+```bash
+javascript>>> :install lodash
+[run] Installing 'lodash' for javascript...
+[run] Successfully installed 'lodash'
+```
+
+**Ruby (uses gem):**
+
+```bash
+ruby>>> :install nokogiri
+[run] Installing 'nokogiri' for ruby...
+[run] Successfully installed 'nokogiri'
+```
+
+### Supported Package Managers
+
+| Language | Package Manager | Command |
+|----------|----------------|---------|
+| Python | pip | `pip install <pkg>` |
+| JavaScript/TypeScript | npm | `npm install <pkg>` |
+| Rust | cargo | `cargo add <pkg>` |
+| Go | go | `go get <pkg>` |
+| Ruby | gem | `gem install <pkg>` |
+| PHP | composer | `composer require <pkg>` |
+| Lua | luarocks | `luarocks install <pkg>` |
+| Dart | dart pub | `dart pub add <pkg>` |
+| Perl | cpanm | `cpanm <pkg>` |
+| Julia | Pkg | `Pkg.add("<pkg>")` |
+| Haskell | cabal | `cabal install <pkg>` |
+| Nim | nimble | `nimble install <pkg>` |
+| R | install.packages | `install.packages("<pkg>")` |
+| C# | dotnet | `dotnet add package <pkg>` |
+| Crystal | shards | `shards install <pkg>` |
+
+!!! note "Languages Without Package Managers"
+    Some languages (C, C++, Bash, Zig, Java, Kotlin) don't have a standard CLI package manager and will show an appropriate message.
+
+### CLI Alternative
+
+You can also install packages from the command line without entering the REPL:
+
+```bash
+run --install numpy -l python
+run --install lodash -l js
+run --install nokogiri -l ruby
+```
+
+---
+
+## `:bench [N] <code>`
+
+Benchmark a code snippet by running it N times and reporting statistics.
+
+### Usage
+
+```bash
+>>> :bench print('hello')          # Default: 5 iterations
+>>> :bench 20 print('hello')       # Run 20 times
+```
+
+### Parameters
+
+- `[N]` - Optional iteration count (default: 5, minimum: 1)
+- `<code>` - Code to benchmark
+
+### Example
+
+```bash
+python>>> :bench 10 sum(range(100000))
+Benchmark: 10 iterations
+  warmup: 12ms
+  run 1: 10.24ms
+  run 2: 9.87ms
+  ...
+Results (10 runs):
+  min:    9.12ms
+  max:    12.45ms
+  avg:    10.15ms
+  median: 10.02ms
+  stddev: 0.89ms
+```
+
+### Output
+
+- **warmup** — First run (not counted) to prime caches
+- **min/max/avg/median** — Distribution of execution times
+- **stddev** — Standard deviation across all runs
+
+---
+
+## `:type` / `:which`
+
+Show the active language and whether a session is currently open.
+
+### Usage
+
+```bash
+>>> :type
+>>> :which
+```
+
+### Example
+
+```bash
+python>>> :type
+Active language: python (session active)
+
+>>> :which
+Active language: python (no session)
+```
 
 ---
 
@@ -385,6 +617,7 @@ Many commands have shorter aliases:
 | Full Command | Aliases |
 |--------------|---------|
 | `:language` | `:lang` |
+| `:load` | `:run` |
 | `:exit` | `:quit`, `Ctrl+D` |
 | `:python` | `:py` |
 | `:javascript` | `:js` |

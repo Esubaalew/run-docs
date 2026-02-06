@@ -339,14 +339,31 @@ time run rust "fn main() { println!(\"hello\"); }"
 time run rust "fn main() { println!(\"hello\"); }"
 ```
 
-### Script Caching
+### Execution Timing
 
-Scripts run in temporary directories, but interpreters cache bytecode:
+Use `--timing` to see how long each execution takes:
 
 ```bash
-# Python generates .pyc files automatically
-run script.py  # First run
-run script.py  # Faster (cached bytecode)
+run --timing python "print('hello')"
+# Output: hello
+# [Python 12ms]
+
+# Or set a custom timeout
+run --timeout 5 python "import time; time.sleep(10)"
+# Execution timed out after 5.0s (limit: 5s)
+```
+
+### Toolchain Check
+
+Verify which languages are available on your system:
+
+```bash
+run --check
+# Checking language toolchains...
+#   [ OK ] Python         python
+#   [ OK ] JavaScript     javascript
+#   [MISS] Swift          swift
+#   ...
 ```
 
 ---
@@ -456,7 +473,13 @@ run python 'print("it'\''s working")'
 
 ### 4. Check Language Availability
 
-Before relying on a specific language in scripts:
+Use `run --check` to see all available toolchains at a glance:
+
+```bash
+run --check
+```
+
+Or test a specific language in scripts:
 
 ```bash
 # Check if Python is available
