@@ -77,7 +77,7 @@ Start an interactive C REPL with 'run c'. The REPL is stateful within the sessio
 
 ```bash
 $ run c
-run v0.5.1 — 25+ languages. Type :help for commands.
+run v0.6.0 — 25+ languages. Type :help for commands.
 c>>> #include <stdio.h>
 c>>> int x = 10;
 c>>> printf("%d\\n", x);

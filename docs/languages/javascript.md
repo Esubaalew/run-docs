@@ -139,7 +139,7 @@ Start an interactive JavaScript REPL with 'run js'. The REPL is stateful within 
 
 ```bash
 $ run js
-run v0.5.1 — 25+ languages. Type :help for commands.
+run v0.6.0 — 25+ languages. Type :help for commands.
 js>>> let x = 10
 undefined
 js>>> let y = 20
