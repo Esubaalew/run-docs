@@ -51,18 +51,57 @@ run v2 --help
 
 ---
 
-### Debian / Ubuntu
-
-Download and install the `.deb` package:
+### Homebrew (macOS)
 
 ```bash
-curl -LO https://github.com/esubaalew/run/releases/latest/download/run_amd64.deb
-sudo dpkg -i run_amd64.deb
+brew install run
+```
+
+!!! note "If Homebrew can't find it yet"
+    The Homebrew Core PR is in review. Until it lands, use Cargo or the install script below.
+
+**Verify the installation:**
+
+```bash
+run --version
+```
+
+---
+
+### Debian / Ubuntu (APT)
+
+```bash
+sudo install -d /usr/share/keyrings
+curl -fsSL https://esubalew.dev/run-apt/run-archive-keyring.gpg \
+  | sudo tee /usr/share/keyrings/run-archive-keyring.gpg >/dev/null
+
+echo "deb [signed-by=/usr/share/keyrings/run-archive-keyring.gpg] https://esubalew.dev/run-apt stable main" \
+  | sudo tee /etc/apt/sources.list.d/run.list
+
+sudo apt update
+sudo apt install run
 ```
 
 **Verify the installation:**
 
 ```bash
+run --version
+```
+
+---
+
+### Windows (Winget)
+
+```powershell
+winget install Esubaalew.Run
+```
+
+!!! note "If Winget can't find it yet"
+    The Winget PR is in review. Until it lands, use the Scoop method below.
+
+**Verify the installation:**
+
+```powershell
 run --version
 ```
 
@@ -139,170 +178,3 @@ cd run
 cargo build --release
 sudo cp target/release/run /usr/local/bin/
 ```
-
-**Verify the installation:**
-
-```bash
-run --version
-```
-
----
-
-## Installing Language Toolchains
-
-To execute code in a specific language, you need that language's runtime or compiler installed:
-
-### Scripting Languages
-
-```bash
-# Python
-sudo apt install python3        # Debian/Ubuntu
-brew install python            # macOS
-
-# Node.js (JavaScript)
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Ruby
-sudo apt install ruby          # Debian/Ubuntu
-brew install ruby              # macOS
-```
-
-### Compiled Languages
-
-```bash
-# Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-# Go
-wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.21.0.linux-amd64.tar.gz
-
-# GCC (C/C++)
-sudo apt install build-essential  # Debian/Ubuntu
-xcode-select --install           # macOS
-```
-
-### Check Supported Languages
-
-To see the list of languages supported by the run tool:
-
-```bash
-run
->>> :languages
-```
-
-This will show all languages that the run tool supports. Note that to actually execute code in a specific language, you still need to have that language's runtime or compiler installed on your system.
-
----
-
-## Updating
-
-### Cargo
-
-```bash
-cargo install run-kit --force
-```
-
-### Scoop
-
-```powershell
-scoop update run
-```
-
----
-
-## Uninstalling
-
-### Cargo
-
-```bash
-cargo uninstall run-kit
-```
-
-### Scoop
-
-```powershell
-scoop uninstall run
-```
-
-### Manual
-
-Simply remove the binary from your PATH:
-
-```bash
-sudo rm /usr/local/bin/run
-```
-
----
-
-## Troubleshooting
-
-### Command not found
-
-If you get `command not found: run` after installation:
-
-1. **Check if the binary is installed:**
-   ```bash
-   which run
-   ```
-
-2. **Ensure the install directory is in your PATH:**
-   ```bash
-   echo $PATH
-   ```
-
-3. **Add to PATH if needed:**
-   ```bash
-   # For bash
-   echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
-   source ~/.bashrc
-   
-   # For zsh
-   echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
-   source ~/.zshrc
-   ```
-
-### Permission Denied
-
-If you get permission errors:
-
-```bash
-# Make the binary executable
-chmod +x /path/to/run
-
-# Or install with sudo
-sudo cp run /usr/local/bin/
-```
-
-### Language Not Found
-
-If a language isn't detected:
-
-1. **Verify the toolchain is installed:**
-   ```bash
-   python3 --version
-   node --version
-   rustc --version
-   ```
-
-2. **Check if it's in your PATH:**
-   ```bash
-   which python3
-   which node
-   ```
-
-3. **Try explicitly specifying the language:**
-   ```bash
-   run --lang python "print('hello')"
-   ```
-
----
-
-## Next Steps
-
-Now that you have `run` installed, let's get started:
-
-[Quickstart Guide](quickstart.md){ .md-button .md-button--primary }
-[First Steps](first-steps.md){ .md-button }
-
