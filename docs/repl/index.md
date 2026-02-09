@@ -13,7 +13,7 @@ Simply run `run` without arguments. By default, it starts in Python mode:
 
 ```bash
 $ run
-run universal REPL. Type :help for commands.
+run v0.5.1 — 25+ languages. Type :help for commands.
 
 >>> 
 ```
@@ -24,7 +24,7 @@ You're now in the REPL! Type `:help` to see available commands.
 
 ```bash
 $ run
-run universal REPL. Type :help for commands.
+run v0.5.1 — 25+ languages. Type :help for commands.
 
 >>> :py
 switched to python
@@ -158,10 +158,16 @@ This displays a list of all languages that the run tool supports. Note that this
 Commands:
   :help                 Show this help message
   :languages            List available languages
+  :versions [id]        Show toolchain versions
   :lang <id>            Switch to language <id>
   :detect on|off        Enable or disable auto language detection
   :reset                Reset the current language session
   :load <path>          Execute a file in the current language
+  :save <path>          Save session history to a file
+  :history [n]          Show last n entries (default: 25)
+  :install <pkg>        Install a package for the current language
+  :bench [N] <code>     Benchmark code N times (default: 10)
+  :type                 Show current language and session status
   :exit, :quit          Leave the REPL
 Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```
@@ -290,6 +296,10 @@ python>>> def fibonacci(n):
 python>>> [fibonacci(i) for i in range(10)]
 [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 ```
+
+Notes:
+- The REPL auto-indents Python blocks and inserts the expected indent into your input.
+- If you want to dedent (for example `return` aligned with `def`), backspace the inserted spaces or just type `return`/`else`/`elif`/`except`/`finally` and it will auto-dedent on enter.
 
 ### JavaScript
 
@@ -520,7 +530,9 @@ python>>> def func():
 **Solution:** Ensure the module is installed in the language's environment:
 
 ```bash
-# Exit REPL and install
+# If you use a virtualenv, activate it first
+$ python -m venv .venv
+$ source .venv/bin/activate
 $ pip install requests
 
 # Then use in REPL
@@ -531,12 +543,13 @@ python>>> import requests
 
 ## Advanced Usage
 
-### Scripting the REPL
+### Piping Code (Not REPL)
 
-Pipe commands to the REPL:
+When stdin is piped, `run` executes it as a single script (not an interactive REPL).
+REPL commands like `:py` and `:exit` only work in interactive sessions.
 
 ```bash
-echo -e ":py\nx = 10\nprint(x * 2)\n:exit" | run
+echo -e "x = 10\nprint(x * 2)" | run --lang python -
 ```
 
 ### Combining with Shell
@@ -575,4 +588,3 @@ python>>> data
 [REPL Commands →](commands.md){ .md-button .md-button--primary }
 [Stateful Sessions →](sessions.md){ .md-button }
 [Language-Specific Behavior →](language-behavior.md){ .md-button }
-

@@ -102,7 +102,7 @@ For step-by-step execution with persistent state, enter REPL mode once, then typ
 
 ```bash
 $ run cpp
-run universal REPL. Type :help for commands.
+run v0.5.1 — 25+ languages. Type :help for commands.
 cpp>>> #include <iostream>
 cpp>>> int square(int x) { return x * x; }
 cpp>>> std::cout << square(7) << std::endl;

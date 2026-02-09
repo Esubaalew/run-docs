@@ -223,6 +223,7 @@ Inside the REPL, you can use these commands:
 | --- | --- |
 | `:help` | List available meta commands |
 | `:languages` | Show supported languages |
+| `:versions [id]` | Show toolchain versions |
 | `:lang <id>` or `:<alias>` | Switch the active language (`:py`, `:go`, …) |
 | `:detect on/off` | Control snippet language auto-detection |
 | `:load path/to/file` | Execute a file inside the current session |

@@ -95,26 +95,21 @@ Languages for specific domains:
 
 ## Checking Available Languages
 
-See which languages are installed on your system:
+To see which toolchains are actually installed, use `--check`:
 
 ```bash
-$ run
+run --check
+```
+
+To see the list of languages that run supports (not installation status), use:
+
+```bash
+run
 >>> :languages
+available languages: bash, c, cpp, crystal, csharp, dart, elixir, go, groovy, haskell, java, javascript, julia, kotlin, lua, nim, perl, php, python, r, ruby, rust, swift, typescript, zig
 ```
 
-Output:
-```
-Available language engines:
-✓ python (python, py, py3, python3)
-✓ javascript (javascript, js, node, nodejs)
-✓ rust (rust, rs)
-✓ go (go, golang)
-✗ haskell (haskell, hs, ghci) - not installed
-...
-```
-
-- ✓ = Toolchain is available
-- ✗ = Toolchain is not installed
+If you want versions for installed toolchains, use `--versions` or `:versions`.
 
 ## Installing Language Toolchains
 
@@ -338,4 +333,3 @@ Explore language-specific guides:
 [JavaScript Guide](javascript.md){ .md-button }
 [Rust Guide](rust.md){ .md-button }
 [View All Languages →](python.md){ .md-button .md-button--primary }
-

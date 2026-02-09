@@ -198,6 +198,8 @@ nav:
     - Perl: languages/perl.md
     - Swift: languages/swift.md
     - Kotlin: languages/kotlin.md
+  - Reference:
+    - Command Index: reference/commands.md
     - Dart: languages/dart.md
     - R: languages/r.md
     - Haskell: languages/haskell.md

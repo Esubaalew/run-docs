@@ -39,6 +39,7 @@
   {% set search_url = site_url ~ '/' ~ search_path.lstrip('/') %}
 
   <!-- SEO Meta Tags -->
+  <meta name="description" content="{{ page_description }}">
   <meta name="keywords" content="{{ config.extra.keywords }}">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -49,6 +50,7 @@
   <meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
   <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ site_url }}/sitemap.xml">
+  <link rel="canonical" href="{{ canonical_url }}">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="{% if page.is_homepage %}website{% else %}article{% endif %}">

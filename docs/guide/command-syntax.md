@@ -71,6 +71,7 @@ Options:
       --timeout <SECS> Maximum execution time in seconds (default: 60)
       --timing         Show execution timing after each run
       --check          Check which language toolchains are available
+      --versions       Show toolchain versions for available languages
       --install <PKG>  Install a package for the specified language
       --no-detect      Disable heuristic language detection
   -h, --help           Print help
@@ -115,6 +116,22 @@ run -c "print('hello')"
 run python "print('hello')"
 ```
 
+### Package Installation (`--install`)
+
+Install a package using the language's package manager. For Python, `run` uses `python -m pip`, so the active virtualenv is respected.
+
+```bash
+run --install requests -l python
+run --install lodash -l js
+```
+
+You can override the install command per language:
+
+```bash
+export RUN_INSTALL_COMMAND_PYTHON="uv pip install {package}"
+export RUN_INSTALL_COMMAND_JAVASCRIPT="pnpm add {package}"
+```
+
 ### File Input (`-f, --file`)
 
 Execute a file:
@@ -148,7 +165,7 @@ run --watch script.py
 run -w -l python script.py
 
 # Short form
-run python -w script.py
+run -w python script.py
 ```
 
 Press `Ctrl+C` to stop watching.
@@ -159,13 +176,44 @@ Run code N times and report execution time statistics:
 
 ```bash
 # Benchmark 10 iterations
-run python --bench 10 -c "sum(range(100000))"
+run --bench 10 python -c "sum(range(100000))"
 
 # Benchmark a file
 run --bench 5 script.py
+
+# Explicit language + file
+run --bench 10 --lang python bench.py
+
+# Explicit language + inline
+run --bench 10 python -c "sum(range(100000))"
+
+# Sample output (trimmed)
+# Benchmark: Python — 10 iterations
+#   warmup: 55ms
+#   run 1: 55.32ms
+#   run 10: 55.32ms
+#
+# Results (10 runs):
+#   min:    55.02ms
+#   max:    55.37ms
+#   avg:    55.28ms
+#   median: 55.32ms
+#   stddev: 0.09ms
 ```
 
 Output includes warmup, per-run timing, and statistical summary (min, max, avg, median, stddev).
+
+### Toolchain Versions (`--versions`)
+
+Show the installed toolchain versions:
+
+```bash
+# All languages
+run --versions
+
+# One language
+run --versions --lang python
+```
 
 ### Disable Detection (`--no-detect`)
 
@@ -769,4 +817,3 @@ EOF
 [Running Files →](running-files.md){ .md-button .md-button--primary }
 [Piping Data →](piping-data.md){ .md-button }
 [Language Detection →](language-detection.md){ .md-button }
-

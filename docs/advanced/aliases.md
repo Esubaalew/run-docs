@@ -419,17 +419,15 @@ run python "..."
 
 ## Alias Detection
 
-Check which aliases are available:
+`:languages` lists the canonical language ids that run supports (not alias lists or install status):
 
 ```bash
 $ run
 >>> :languages
-Available language engines:
-✓ python (python, py, py3, python3)
-✓ javascript (javascript, js, node, nodejs)
-✓ rust (rust, rs)
-...
+available languages: bash, c, cpp, crystal, csharp, dart, elixir, go, groovy, haskell, java, javascript, julia, kotlin, lua, nim, perl, php, python, r, ruby, rust, swift, typescript, zig
 ```
+
+Aliases are documented in the language pages and on the Supported Languages page.
 
 ## Custom Aliases (Shell)
 
@@ -448,4 +446,3 @@ rsrun "fn main() { println!(\"hello\"); }"
 ## Next Steps
 
 [Environment Variables](environment.md){ .md-button .md-button--primary }
-

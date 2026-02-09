@@ -345,7 +345,7 @@ For longer sessions, use the interactive mode. By default, `run` starts in Pytho
 
 ```bash
 $ run
-run universal REPL. Type :help for commands.
+run v0.5.1 — 25+ languages. Type :help for commands.
 
 >>> :py
 switched to python
@@ -519,6 +519,7 @@ $ run
 Commands:
   :help                 Show this help message
   :languages            List available languages
+  :versions [id]        Show toolchain versions
   :lang <id>            Switch to language <id>
   :detect on|off        Enable or disable auto language detection
   :reset                Reset the current language session
@@ -526,6 +527,8 @@ Commands:
   :save <path>          Save session history to a file
   :history [n]          Show last n entries (default: 25)
   :install <pkg>        Install a package for the current language
+  :bench [N] <code>     Benchmark code N times (default: 10)
+  :type                 Show current language and session status
   :exit, :quit          Leave the REPL
 Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```
@@ -552,4 +555,3 @@ Now that you know the basics, dive deeper:
 [User Guide](../guide/overview.md){ .md-button .md-button--primary }
 [REPL Mode](../repl/index.md){ .md-button }
 [Supported Languages](../languages/index.md){ .md-button }
-

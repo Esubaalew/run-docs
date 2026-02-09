@@ -130,7 +130,7 @@ Start an interactive Groovy REPL by running 'run groovy' without any code. The G
 
 ```bash
 $ run groovy
-run universal REPL. Type :help for commands.
+run v0.5.1 — 25+ languages. Type :help for commands.
 groovy>>> def x = 10
 groovy>>> def y = 20
 groovy>>> println x + y

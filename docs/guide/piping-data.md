@@ -19,6 +19,9 @@ Output:
 HELLO WORLD
 ```
 
+!!! tip "Backslashes and multiline snippets"
+    If your inline snippet contains backslashes (for example regex like `\w`) or lots of quotes, prefer `--code` with `$'...'`, or use a heredoc/pipe code via stdin. This avoids shell‑quoting issues and older `run` versions misreading backslashes as file paths.
+
 ## JSON Processing
 
 ### Python

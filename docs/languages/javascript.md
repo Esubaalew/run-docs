@@ -41,9 +41,12 @@ run js "const x = 10; const y = 20; console.log(x + y)"
 ### Template Literals
 
 ```bash
-run js "const name = 'Alice'; console.log(\`Hello, \${name}!\`)"
+run js 'const name = "Alice"; console.log(`Hello, ${name}!`)'
 # Output: Hello, Alice!
 ```
+
+!!! note "zsh quoting"
+    In zsh, `!` triggers history expansion even inside double quotes. Use single quotes (as above) or disable history expansion with `set +H`, or use a heredoc for multi-line code.
 
 ### Arrow Functions
 
@@ -136,7 +139,7 @@ Start an interactive JavaScript REPL with 'run js'. The REPL is stateful within 
 
 ```bash
 $ run js
-run universal REPL. Type :help for commands.
+run v0.5.1 — 25+ languages. Type :help for commands.
 js>>> let x = 10
 undefined
 js>>> let y = 20
@@ -168,12 +171,12 @@ Access all Node.js built-in modules without installation:
 ### File System Operations
 
 ```bash
-run js "
+run js << 'EOF'
 const fs = require('fs');
 const files = fs.readdirSync('.');
-console.log(\`Found \${files.length} files\`);
-files.slice(0, 5).forEach(f => console.log(\`  - \${f}\`));
-"
+console.log(`Found ${files.length} files`);
+files.slice(0, 5).forEach(f => console.log(`  - ${f}`));
+EOF
 # Output:
 # Found 12 files
 #   - README.md
@@ -186,13 +189,13 @@ files.slice(0, 5).forEach(f => console.log(\`  - \${f}\`));
 ### Path Operations
 
 ```bash
-run js "
+run js << 'EOF'
 const path = require('path');
 const file = '/home/user/documents/file.txt';
 console.log('Directory:', path.dirname(file));
 console.log('Filename:', path.basename(file));
 console.log('Extension:', path.extname(file));
-"
+EOF
 # Output:
 # Directory: /home/user/documents
 # Filename: file.txt
@@ -202,12 +205,12 @@ console.log('Extension:', path.extname(file));
 ### OS Information
 
 ```bash
-run js "
+run js << 'EOF'
 const os = require('os');
 console.log('Platform:', os.platform());
 console.log('CPU Cores:', os.cpus().length);
 console.log('Total Memory:', Math.round(os.totalmem() / 1024 / 1024 / 1024) + ' GB');
-"
+EOF
 # Output:
 # Platform: linux
 # CPU Cores: 8
@@ -221,14 +224,14 @@ Use ES6+ features including async/await, destructuring, and more:
 ### Async/Await
 
 ```bash
-run js "
+run js << 'EOF'
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 (async () => {
   console.log('Starting...');
   await delay(1000);
   console.log('Done after 1 second!');
 })();
-"
+EOF
 # Output:
 # Starting...
 # Done after 1 second!
@@ -237,23 +240,23 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 ### Destructuring
 
 ```bash
-run js "
+run js << 'EOF'
 const person = { name: 'Alice', age: 30, city: 'NYC' };
 const { name, age } = person;
-console.log(\`\${name} is \${age} years old\`);
-"
+console.log(`${name} is ${age} years old`);
+EOF
 # Output: Alice is 30 years old
 ```
 
 ### Spread Operator
 
 ```bash
-run js "
+run js << 'EOF'
 const arr1 = [1, 2, 3];
 const arr2 = [4, 5, 6];
 const combined = [...arr1, ...arr2];
 console.log(combined);
-"
+EOF
 # Output: [ 1, 2, 3, 4, 5, 6 ]
 ```
 

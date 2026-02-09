@@ -73,12 +73,22 @@ run --lang bash my_script
 
 ## Working Directory
 
-Scripts execute in their directory:
+Scripts execute in the current working directory (where you run `run`), not the script’s directory:
 
 ```python
 # script.py in /home/user/project/
 import os
-print(os.getcwd())  # /home/user/project
+print(os.getcwd())  # /home/user
+```
+
+If you need the script’s directory as the working directory, `cd` first (or use a subshell):
+
+```bash
+cd /home/user/project
+run script.py
+
+# or
+(cd /home/user/project && run script.py)
 ```
 
 ## Next Steps

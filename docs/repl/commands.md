@@ -8,13 +8,14 @@ Complete reference for all REPL meta-commands. These commands start with `:` and
 |---------|---------|
 | `:help` | Show help message |
 | `:languages` | List available languages |
+| `:versions [id]` | Show toolchain versions |
 | `:lang <id>` | Switch to a language |
 | `:detect on\|off` | Control auto-detection |
 | `:load <path>` | Execute a file (persists variables) |
 | `:save <path>` | Save session history to file |
 | `:history [n]` | Show last n history entries |
 | `:install <pkg>` | Install a package for current language |
-| `:bench [N] <code>` | Benchmark code N times (default 5) |
+| `:bench [N] <code>` | Benchmark code N times (default 10) |
 | `:type` / `:which` | Show active language and session state |
 | `:reset` | Clear session state |
 | `:exit` / `:quit` | Exit the REPL |
@@ -36,6 +37,7 @@ Display available commands and language shortcuts.
 Commands:
   :help                 Show this help message
   :languages            List available languages
+  :versions [id]        Show toolchain versions
   :lang <id>            Switch to language <id>
   :detect on|off        Enable or disable auto language detection
   :reset                Reset the current language session
@@ -43,6 +45,8 @@ Commands:
   :save <path>          Save session history to a file
   :history [n]          Show last n entries (default: 25)
   :install <pkg>        Install a package for the current language
+  :bench [N] <code>     Benchmark code N times (default: 10)
+  :type                 Show current language and session status
   :exit, :quit          Leave the REPL
 Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```
@@ -57,6 +61,19 @@ List all languages supported by the run tool.
 
 ```bash
 >>> :languages
+```
+
+---
+
+## `:versions [id]`
+
+Show toolchain versions for all languages, or a single language.
+
+### Usage
+
+```bash
+>>> :versions
+>>> :versions python
 ```
 
 ### Example
@@ -371,7 +388,7 @@ python>>> :history
 
 ## `:install <pkg>`
 
-Install a package using the current language's native package manager. Delegates to `pip`, `npm`, `gem`, `cargo`, etc. based on the active language.
+Install a package using the current language's native package manager. Delegates to `python -m pip`, `npm`, `gem`, `cargo`, etc. based on the active language. For Python, this uses whichever `python` is on your PATH, so virtual environments are respected (activate your venv first).
 
 ### Usage
 
@@ -385,7 +402,7 @@ Install a package using the current language's native package manager. Delegates
 
 ### Examples
 
-**Python (uses pip):**
+**Python (uses pip via `python -m pip`):**
 
 ```bash
 python>>> :install requests
@@ -417,7 +434,7 @@ ruby>>> :install nokogiri
 
 | Language | Package Manager | Command |
 |----------|----------------|---------|
-| Python | pip | `pip install <pkg>` |
+| Python | pip | `python -m pip install <pkg>` |
 | JavaScript/TypeScript | npm | `npm install <pkg>` |
 | Rust | cargo | `cargo add <pkg>` |
 | Go | go | `go get <pkg>` |
@@ -435,6 +452,23 @@ ruby>>> :install nokogiri
 
 !!! note "Languages Without Package Managers"
     Some languages (C, C++, Bash, Zig, Java, Kotlin) don't have a standard CLI package manager and will show an appropriate message.
+
+### Custom Package Managers
+
+You can override the install command per language with an environment variable:
+
+```bash
+# Use uv instead of pip
+export RUN_INSTALL_COMMAND_PYTHON="uv pip install {package}"
+
+# Use pnpm instead of npm
+export RUN_INSTALL_COMMAND_JAVASCRIPT="pnpm add {package}"
+```
+
+`{package}` will be replaced with the package name. If you omit it, the package name is appended automatically.
+
+!!! tip "If Install Fails"
+    If you see `Package manager not found`, install that tool (e.g., `npm`, `uv`, `pnpm`) or set `RUN_INSTALL_COMMAND_<LANG>` to a command that exists on your PATH.
 
 ### CLI Alternative
 
@@ -455,13 +489,13 @@ Benchmark a code snippet by running it N times and reporting statistics.
 ### Usage
 
 ```bash
->>> :bench print('hello')          # Default: 5 iterations
+>>> :bench print('hello')          # Default: 10 iterations
 >>> :bench 20 print('hello')       # Run 20 times
 ```
 
 ### Parameters
 
-- `[N]` - Optional iteration count (default: 5, minimum: 1)
+- `[N]` - Optional iteration count (default: 10, minimum: 1)
 - `<code>` - Code to benchmark
 
 ### Example
@@ -699,22 +733,13 @@ Forget a command?
 
 ---
 
-## Scripting REPL Commands
+## Piping Code (Not REPL)
 
-You can script REPL sessions:
+When stdin is piped, `run` executes it as a single script (not an interactive REPL).
+REPL commands like `:py` and `:exit` only work in interactive sessions.
 
 ```bash
-# Create a script
-cat << 'EOF' > repl_script.txt
-:py
-x = 10
-y = 20
-print(x + y)
-:exit
-EOF
-
-# Run it
-cat repl_script.txt | run
+echo -e "x = 10\ny = 20\nprint(x + y)" | run --lang python -
 ```
 
 ---
@@ -762,4 +787,3 @@ Error: File not found: missing.py
 
 [Stateful Sessions →](sessions.md){ .md-button .md-button--primary }
 [Language-Specific Behavior →](language-behavior.md){ .md-button }
-
