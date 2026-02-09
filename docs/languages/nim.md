@@ -25,7 +25,7 @@ Start the REPL with `run nim`, then type commands at the `nim>>>` prompt:
 
 ```bash
 ❯ run nim
-run v0.6.0 — 25+ languages. Type :help for commands.
+run v0.6.1 — 25+ languages. Type :help for commands.
 nim>>> var age: int = 25
 nim>>> age
 25

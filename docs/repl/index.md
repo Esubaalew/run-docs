@@ -13,7 +13,7 @@ Simply run `run` without arguments. By default, it starts in Python mode:
 
 ```bash
 $ run
-run v0.6.0 — 25+ languages. Type :help for commands.
+run v0.6.1 — 25+ languages. Type :help for commands.
 
 >>> 
 ```
@@ -24,7 +24,7 @@ You're now in the REPL! Type `:help` to see available commands.
 
 ```bash
 $ run
-run v0.6.0 — 25+ languages. Type :help for commands.
+run v0.6.1 — 25+ languages. Type :help for commands.
 
 >>> :py
 switched to python

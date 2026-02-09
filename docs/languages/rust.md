@@ -134,7 +134,7 @@ Start the REPL with `run rust`, then type commands at the `rust>>>` prompt:
 
 ```bash
 ❯ run rust
-run v0.6.0 — 25+ languages. Type :help for commands.
+run v0.6.1 — 25+ languages. Type :help for commands.
 rust>>> let x = 42;
 rust>>> println!("{}", x);
 42
@@ -147,7 +147,7 @@ Start an interactive Rust REPL with 'run rust'. Rust's REPL compiles each snippe
 
 ```bash
 $ run rust
-run v0.6.0 — 25+ languages. Type :help for commands.
+run v0.6.1 — 25+ languages. Type :help for commands.
 rust>>> let x = 10;
 rust>>> println!("{}", x);
 10

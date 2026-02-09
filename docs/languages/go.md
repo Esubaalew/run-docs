@@ -133,7 +133,7 @@ Start the REPL with `run go`, then type commands at the `go>>>` prompt:
 
 ```bash
 ❯ run go
-run v0.6.0 — 25+ languages. Type :help for commands.
+run v0.6.1 — 25+ languages. Type :help for commands.
 go>>> x := 42
 go>>> fmt.Println(x)
 42
@@ -146,7 +146,7 @@ Start an interactive Go REPL with 'run go'. Note that Go's REPL behavior may var
 
 ```bash
 $ run go
-run v0.6.0 — 25+ languages. Type :help for commands.
+run v0.6.1 — 25+ languages. Type :help for commands.
 go>>> import "fmt"
 go>>> x := 10
 go>>> fmt.Println(x)
