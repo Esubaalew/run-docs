@@ -54,8 +54,11 @@ run v2 --help
 ### Homebrew (macOS)
 
 ```bash
-brew install run
+brew install run-kit
 ```
+
+!!! note "Formula name"
+    Homebrew already has a `run` formula for a different project, so this tool is published as `run-kit`. It still installs the `run` binary.
 
 !!! note "If Homebrew can't find it yet"
     The Homebrew Core PR is in review. Until it lands, use Cargo or the install script below.
