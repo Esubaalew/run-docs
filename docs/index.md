@@ -117,6 +117,14 @@ cargo install run-kit
 
 Installs the `run` binary from crates.io. Updating? Run `cargo install run-kit --force`.
 
+### Homebrew (macOS)
+
+```bash
+brew install run-kit
+```
+
+Installs the `run` binary from Homebrew Core. (Published as `run-kit` because the name `run` is already used by another formula.)
+
 ### Debian / Ubuntu
 
 ```bash

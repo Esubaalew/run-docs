@@ -18,6 +18,10 @@ Before installing `run`, ensure you have:
 !!! tip "Language Toolchains"
     `run` shells out to real language toolchains. To execute code in a specific language, you need that language's runtime or compiler installed (e.g., `python3`, `node`, `rustc`, `go`, etc.).
 
+## Installing language toolchains
+
+`run` does not install language runtimes for you. Install the runtime or compiler for each language you want to use (e.g. Python, Node.js, Go). See the [Supported Languages](../languages/index.md#installing-language-toolchains) page for quick install commands per language and platform.
+
 ## Installation Methods
 
 ### Cargo (Recommended)
@@ -59,9 +63,6 @@ brew install run-kit
 
 !!! note "Formula name"
     Homebrew already has a `run` formula for a different project, so this tool is published as `run-kit`. It still installs the `run` binary.
-
-!!! note "If Homebrew can't find it yet"
-    The Homebrew Core PR is in review. Until it lands, use Cargo or the install script below.
 
 **Verify the installation:**
 

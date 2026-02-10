@@ -165,7 +165,7 @@ To use a language, you need its runtime or compiler installed:
     winget install GoLang.Go
     ```
 
-See the [Installation Guide](../getting-started/installation.md#installing-language-toolchains) for complete instructions.
+See the [Installation Guide](../getting-started/installation.md#installing-language-toolchains) for an overview of installing language toolchains.
 
 ## Language-Specific Examples
 

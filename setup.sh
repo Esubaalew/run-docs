@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 echo "🚀 Setting up run-kit documentation..."
 
@@ -9,23 +10,32 @@ if ! command -v python3 &> /dev/null; then
     exit 1
 fi
 
-# Create virtual environment
-echo "📦 Creating virtual environment..."
-python3 -m venv venv
+# Use existing .venv or venv, or create .venv (never install without a venv)
+VENV_DIR=
+if [[ -d .venv ]]; then
+    VENV_DIR=".venv"
+elif [[ -d venv ]]; then
+    VENV_DIR="venv"
+else
+    echo "📦 Creating virtual environment .venv..."
+    python3 -m venv .venv
+    VENV_DIR=".venv"
+fi
 
-# Activate virtual environment
-source venv/bin/activate
+# Activate virtual environment (required before any pip install)
+echo "📦 Using venv: $VENV_DIR"
+source "$VENV_DIR/bin/activate"
 
-# Install dependencies
-echo "📥 Installing dependencies..."
+# Install dependencies inside venv only
+echo "📥 Installing dependencies (in venv)..."
 pip install --upgrade pip
 pip install -r requirements.txt
 
 echo ""
 echo "✅ Setup complete!"
 echo ""
-echo "To start the development server:"
-echo "  source venv/bin/activate"
+echo "To start the development server (always activate venv first):"
+echo "  source $VENV_DIR/bin/activate"
 echo "  mkdocs serve"
 echo ""
 echo "Then open http://127.0.0.1:8000 in your browser."
