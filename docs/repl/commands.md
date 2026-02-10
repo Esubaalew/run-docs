@@ -1,33 +1,87 @@
 # REPL Commands
 
-Complete reference for all REPL meta-commands. These commands start with `:` and control the REPL behavior.
+Complete reference for all REPL meta-commands. These commands start with `:` and work the same in every language (`run`, `run python`, `run go`, etc.).
+
+!!! tip "Piping into run"
+    When piping input into `run` (e.g. in scripts or CI), use **`run -i`** or **`run --interactive`** so run starts the REPL instead of executing stdin as a script. Example: `echo ':help\n:exit' | run -i`.
+
+## Shell escape
+
+### `:! CMD`
+
+Run a shell command with **inherited** stdin, stdout, and stderr. Output goes directly to your terminal.
+
+```bash
+python>>> :! echo hello
+hello
+python>>> :! ls -la
+```
+
+### `:!! CMD`
+
+Run a shell command and **capture** stdout and stderr, then print them.
+
+```bash
+python>>> :!! echo captured
+captured
+python>>> :!! pwd
+/Users/you/project
+```
+
+---
 
 ## Command Overview
 
 | Command | Purpose |
 |---------|---------|
-| `:help` | Show help message |
+| `:help` | Show all REPL commands |
+| `:help :cmd` | Help for one command (e.g. `:help load`) |
+| `:commands` | List all `:cmd` with one-line description (machine-friendly) |
+| `:quickref` | One-screen cheat sheet (all commands + shortcuts) |
 | `:languages` | List available languages |
 | `:versions [id]` | Show toolchain versions |
 | `:lang <id>` | Switch to a language |
 | `:detect on\|off` | Control auto-detection |
-| `:load <path>` | Execute a file (persists variables) |
+| `:cd [path]` | Change directory; `:cd -` = previous, `:cd -b <name>` = bookmark |
+| `:dhist [n]` | Directory history (default 10) |
+| `:bookmark <name> [path]` | Save bookmark; `-l` list, `-d <name>` delete |
+| `:env [VAR[=val]]` | List env, get VAR, or set VAR=val |
+| `:load <path\|url>` | Load and execute a file or http(s) URL (persists variables) |
+| `:edit [path]` | Open $EDITOR; on save, execute in current session (no path = temp file) |
+| `:run <path\|url\|macro>` | Load file/URL or run macro by name |
+| `:logstart [path]` | Start logging input to file (default: run_log.txt) |
+| `:logstop` | Stop logging |
+| `:logstate` | Show whether logging and path |
+| `:macro <NAME> <range>...` | Save history range as macro; `:macro run NAME` to run |
+| `:time <code>` | Run code once and print elapsed time |
+| `:who` | List names tracked in current session |
+| `:whos [pattern]` | Like `:who` with optional name filter |
 | `:save <path>` | Save session history to file |
-| `:history [n]` | Show last n history entries |
+| `:history [n\|range]` | Show history; `-g PATTERN`, `-f FILE`, `4-6` or `4-` or `-6` |
 | `:install <pkg>` | Install a package for current language |
 | `:bench [N] <code>` | Benchmark code N times (default 10) |
 | `:type` / `:which` | Show active language and session state |
 | `:reset` | Clear session state |
 | `:exit` / `:quit` | Exit the REPL |
 
+---
+
 ## `:help`
 
 Display available commands and language shortcuts.
+
+- **`:help`** — Show full help.
+- **`:help :cmd`** — Show help for one command (e.g. `:help load`, `:help :edit`).
+- **`:commands`** — List each `:cmd` with a one-line description (no formatting; for scripts).
+- **`:quickref`** — One-screen cheat sheet (all commands + language shortcuts).
 
 ### Usage
 
 ```bash
 >>> :help
+>>> :help load
+>>> :commands
+>>> :quickref
 ```
 
 ### Example
@@ -212,19 +266,107 @@ auto-detect disabled
 
 ---
 
+## Directory and bookmarks
+
+### `:cd [path]`
+
+Change the current working directory. Without arguments, print the current directory.
+
+- **`:cd -`** — Go back to the previous directory (from the directory stack).
+- **`:cd -b <name>`** — Go to the directory saved as bookmark `name` (see `:bookmark`).
+
+```bash
+python>>> :cd /tmp
+/tmp
+python>>> :cd -
+/home/you/project
+```
+
+### `:dhist [n]`
+
+Print the last `n` directories in the directory history (default 10). The stack is updated when you use `:cd <path>` or `:cd -b <name>`.
+
+### `:bookmark <name> [path]`
+
+Save a bookmark. With only `name`, use the current directory. With `path`, use that absolute path. Bookmarks are stored in `~/.run_bookmarks` and persist across sessions.
+
+- **`:bookmark -l`** — List all bookmarks.
+- **`:bookmark -d <name>`** — Delete the bookmark `name`.
+
+```bash
+python>>> :bookmark proj /home/you/project
+[bookmark 'proj' -> /home/you/project]
+python>>> :cd -b proj
+/home/you/project
+```
+
+---
+
+## `:env [VAR[=val]]`
+
+List, get, or set environment variables. No arguments: list all. One argument `VAR`: print value. One argument `VAR=val` or two arguments `VAR` `val`: set.
+
+```bash
+python>>> :env
+HOME=/home/you
+PATH=/usr/bin:...
+python>>> :env RUN_TEST 1
+python>>> :env RUN_TEST
+1
+```
+
+---
+
+## `:edit [path]`
+
+Open `$EDITOR` (or vi/notepad); on save and exit, execute the file in the current session. No path = create and edit a temp file, then execute it.
+
+---
+
+## Logging
+
+| Command | Purpose |
+|---------|---------|
+| `:logstart [path]` | Start logging REPL input to file (default: run_log.txt in cwd). Append mode. |
+| `:logstop` | Stop logging. |
+| `:logstate` | Show whether logging is on and the path. |
+
+---
+
+## `:macro` and `:time`
+
+### `:macro <NAME> <range>...`
+
+Save a history range as a named macro. Ranges use the same syntax as `:history` (e.g. `4-7`, `-2`, `4-`, `-6`). Run the macro with **`:macro run NAME`** or **`:run NAME`** (if the name is not a file path).
+
+### `:time <code>`
+
+Run the given code once and print the elapsed time.
+
+### `:who` / `:whos [pattern]`
+
+- **`:who`** — List names tracked in the current session (variables/functions from executed code).
+- **`:whos [pattern]`** — Like `:who` with an optional substring filter on names.
+
+---
+
 ## `:load <path>`
 
-Load and execute a file in the current REPL session. Variables, functions, and classes defined in the file **persist in the session** -- you can use them immediately after loading. For languages with session support (Python, JavaScript), the file contents are fed through the session evaluator. Tab completion for file paths is available.
+Load and execute a file or **http(s) URL** in the current REPL session. URLs are fetched to a temp file, then loaded like a local file. Variables, functions, and classes defined in the file **persist in the session** — you can use them immediately after loading. For languages with session support (Python, JavaScript), the file contents are fed through the session evaluator. Tab completion for file paths is available.
+
+**`:run <name>`** — Same as `:load` for a path or URL. If `name` is a macro you defined with `:macro`, it runs that macro instead.
 
 ### Usage
 
 ```bash
 >>> :load <file_path>
+>>> :load https://example.com/script.py
+>>> :run mymacro
 ```
 
 ### Parameters
 
-- `<file_path>` - Path to file (relative or absolute)
+- `<file_path>` — Path to file (relative or absolute) or http(s) URL
 
 ### Examples
 
@@ -347,20 +489,28 @@ print(x + y)
 
 ---
 
-## `:history [n]`
+## `:history [n|range]`
 
-Show recent command history. Defaults to the last 25 entries.
+Show recent command history. Defaults to the last 25 entries. Supports ranges and options:
+
+- **`n`** — Last n entries (default 25).
+- **`4-6`** — Range (entries 4 to 6). **`4-`** — From 4 to end. **`-6`** — Last 6.
+- **`-g PATTERN`** — Grep history for lines matching PATTERN.
+- **`-f FILE`** — Append selected history to FILE (ranges optional; default last 25).
 
 ### Usage
 
 ```bash
->>> :history        # Show last 25 entries
->>> :history 10     # Show last 10 entries
+>>> :history           # Show last 25 entries
+>>> :history 10        # Show last 10 entries
+>>> :history 4-6       # Show entries 4–6
+>>> :history -g print  # Grep for "print"
+>>> :history -f out.py # Append last 25 to out.py
 ```
 
 ### Parameters
 
-- `[n]` - Optional number of entries to show (default: 25)
+- `[n]` — Optional number of entries (default: 25), or range (`4-6`, `4-`, `-6`), or `-g PATTERN`, or `-f FILE`
 
 ### Example
 
