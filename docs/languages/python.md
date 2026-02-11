@@ -148,7 +148,7 @@ Start an interactive Python REPL by running 'run python' without any code. The P
 
 ```bash
 $ run python
-run v0.6.1 — 25+ languages. Type :help for commands.
+run v0.7.0 — 25+ languages. Type :help for commands.
 python>>> x = 10
 python>>> y = 20
 python>>> print(x + y)

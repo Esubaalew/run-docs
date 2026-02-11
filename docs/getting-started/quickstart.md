@@ -345,7 +345,7 @@ For longer sessions, use the interactive mode. By default, `run` starts in Pytho
 
 ```bash
 $ run
-run v0.6.1 — 25+ languages. Type :help for commands.
+run v0.7.0 — 25+ languages. Type :help for commands.
 
 >>> :py
 switched to python

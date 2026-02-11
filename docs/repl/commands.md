@@ -56,10 +56,18 @@ python>>> :!! pwd
 | `:time <code>` | Run code once and print elapsed time |
 | `:who` | List names tracked in current session |
 | `:whos [pattern]` | Like `:who` with optional name filter |
+| `:xmode plain\|context\|verbose` | Exception display: first line, first 5 lines, or full stderr |
+| `:config KEY [VALUE]` | Get/set REPL config (e.g. detect, xmode); persists in `~/.run_repl_config` |
+| `:paste` | Enter paste mode; on `:end` or Ctrl-D, execute buffer (strip `>>>` / `...`, dedent) |
+| `:end` | End paste mode and execute the collected lines (only in paste mode) |
+| `:precision [N]` | Show or set float display precision (0–32) for last result; persists in config |
 | `:save <path>` | Save session history to file |
 | `:history [n\|range]` | Show history; `-g PATTERN`, `-f FILE`, `4-6` or `4-` or `-6` |
 | `:install <pkg>` | Install a package for current language |
 | `:bench [N] <code>` | Benchmark code N times (default 10) |
+| `:last` | Print last execution stdout |
+| `:? <expr>` | Introspection: show doc/source for name (Python session) |
+| `:debug [code]` | Run last snippet or code under debugger (Python: pdb) |
 | `:type` / `:which` | Show active language and session state |
 | `:reset` | Clear session state |
 | `:exit` / `:quit` | Exit the REPL |
@@ -330,6 +338,123 @@ Open `$EDITOR` (or vi/notepad); on save and exit, execute the file in the curren
 | `:logstart [path]` | Start logging REPL input to file (default: run_log.txt in cwd). Append mode. |
 | `:logstop` | Stop logging. |
 | `:logstate` | Show whether logging is on and the path. |
+
+---
+
+## `:xmode plain | context | verbose`
+
+Control how much stderr (e.g. exception tracebacks) is shown after a failed run.
+
+| Mode | What is shown |
+|------|----------------|
+| **plain** | First line of stderr only (compact). |
+| **context** | First 5 lines of stderr. |
+| **verbose** | Full stderr (default). |
+
+With no argument, **`:xmode`** prints the current mode.
+
+### Usage
+
+```bash
+>>> :xmode
+exception display: verbose (plain | context | verbose)
+
+>>> :xmode plain
+>>> :xmode context
+>>> :xmode verbose
+```
+
+---
+
+## `:config KEY [VALUE]`
+
+Get or set REPL configuration. Settings are stored in `~/.run_repl_config` and apply across restarts.
+
+| Form | Effect |
+|------|--------|
+| **`:config`** | List all config keys and current values (e.g. detect, xmode). |
+| **`:config KEY`** | Print the value of KEY. |
+| **`:config KEY VALUE`** | Set KEY to VALUE and save to disk. |
+
+Supported keys:
+
+| Key | Values | Meaning |
+|-----|--------|---------|
+| **detect** | `on`, `off` | Auto language detection (same as `:detect on\|off`). |
+| **xmode** | `plain`, `context`, `verbose` | Exception display mode (same as `:xmode`). |
+| **precision** | `0`–`32` | Float display precision for last result (same as `:precision N`). |
+| **numbered_prompts** | `on`, `off` | Show `[n]` counter in prompt (e.g. `python [3]>>>`). |
+
+### Usage
+
+```bash
+>>> :config
+detect  on
+xmode   verbose
+
+>>> :config detect
+on
+
+>>> :config xmode plain
+[xmode = plain]
+
+>>> :config detect off
+[detect = off]
+```
+
+---
+
+## `:paste` and `:end`
+
+Paste multi-line code (e.g. from a doc or website) without the REPL treating each line as a separate command. Leading `>>>` and `...` prompts are stripped, and the block is dedented before execution.
+
+| Command | Effect |
+|---------|--------|
+| **`:paste`** | Enter paste mode. Subsequent lines are collected into a buffer (not executed). |
+| **`:end`** | Exit paste mode and execute the buffer as one snippet. (Only valid in paste mode.) |
+
+You can also press **Ctrl-D** (EOF) to execute the buffer and then exit the REPL.
+
+### Usage
+
+```bash
+>>> :paste
+[paste mode — type :end or Ctrl-D to execute]
+>>> 1+1
+>>> 2+2
+>>> :end
+2
+4
+[paste done]
+```
+
+Pasted lines can include `>>>` or `...` at the start; they are removed before execution.
+
+---
+
+## `:precision [N]`
+
+Control float display precision when the REPL shows a "last result" (e.g. formatted output). Only affects run’s formatted display, not raw stdout from the language.
+
+| Form | Effect |
+|------|--------|
+| **`:precision`** | Show current precision (or "default"). |
+| **`:precision N`** | Set precision to N decimal places (0–32). Saved to `~/.run_repl_config`. |
+
+You can also set it via **`:config precision N`**.
+
+### Usage
+
+```bash
+>>> :precision
+precision: (default)
+
+>>> :precision 4
+[precision = 4]
+
+>>> :precision
+precision: 4
+```
 
 ---
 
@@ -791,6 +916,142 @@ $
 >>> :quit
 Goodbye!
 ```
+
+---
+
+## `:last`
+
+Print the stdout from the last code execution. Useful after running a snippet to re-examine its output without re-executing.
+
+### Usage
+
+```bash
+>>> :last
+```
+
+### Example
+
+```bash
+python>>> :last
+(no last output)
+
+python>>> 1 + 1
+2
+
+python>>> :last
+2
+```
+
+---
+
+## Numbered Prompts
+
+Enable numbered prompts to show an `[n]` counter in the prompt, similar to IPython's `In[n]` style. The counter increments with each executed snippet.
+
+### Usage
+
+```bash
+>>> :config numbered_prompts on
+>>> :config numbered_prompts off
+```
+
+### Example
+
+```bash
+>>> :config numbered_prompts on
+[numbered_prompts = on]
+
+python [1]>>> 1 + 1
+2
+python [2]>>> x = 42
+python [3]>>> x
+42
+```
+
+The setting persists across restarts via `~/.run_repl_config`.
+
+---
+
+## `_` (Underscore — Last Expression Result)
+
+In languages that support it (currently **Python**), the special variable `_` is set to the result of the last expression. This mirrors Python's interactive interpreter behavior.
+
+### Example
+
+```bash
+python>>> 2 + 3
+5
+python>>> _ * 10
+50
+```
+
+!!! note "Language Support"
+    `_` is set automatically by Python's session evaluator. Other languages do not currently support this feature.
+
+---
+
+## `:? EXPR` — Introspection
+
+Show documentation or source for a name. In **Python sessions**, this runs `help(expr)`. For other languages, introspection prints "not available".
+
+### Usage
+
+```bash
+>>> :? <name>
+```
+
+### Parameters
+
+- `<name>` — A valid identifier (letters, digits, dots, underscores). E.g. `print`, `os.path`, `str.split`.
+
+### Example
+
+```bash
+python>>> :? print
+Help on built-in function print in module builtins:
+
+print(*args, sep=' ', end='\n', file=None, flush=False)
+    Prints the values to a stream, or to sys.stdout by default.
+    ...
+
+javascript>>> :? console
+[run] introspection not available for javascript
+```
+
+---
+
+## `:debug [CODE]` — Debugger
+
+Run the last snippet (or the provided CODE) under the language's debugger. Currently supported for **Python** (uses `pdb`). Other languages print "Debug not available".
+
+### Usage
+
+```bash
+>>> :debug            # Debug last snippet
+>>> :debug <code>     # Debug specific code
+```
+
+### Example
+
+```bash
+python>>> def buggy():
+...         x = 1 / 0
+python>>> :debug buggy()
+> /tmp/run_debug.py(1)<module>()
+-> buggy()
+(Pdb)
+```
+
+```bash
+javascript>>> :debug 1+1
+[run] Debug not available for javascript
+```
+
+!!! tip "Debugger Support Matrix"
+    | Language | Debugger | Status |
+    |----------|----------|--------|
+    | Python | pdb | ✅ Supported |
+    | Others | — | ❌ Not available |
 
 ---
 
