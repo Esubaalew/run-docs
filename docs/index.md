@@ -36,6 +36,20 @@ description: Run is a universal REPL for 25+ languages and a WASI 0.2 component 
 
 ---
 
+!!! success "New in run-kit 0.8"
+    `run` now includes a toolchain-aware build cache, diagnostics, formatter dispatch, local file sharing, file watching, JSON output, and curated snippet templates.
+
+    ```bash
+    run doctor
+    run cache --stats
+    run snippet python http-server > server.py
+    run fmt server.py
+    run watch server.py
+    run --json --timeout 2 python -c "print('scriptable')"
+    ```
+
+---
+
 !!! tip "Run 2.0 - WASI Component Runtime"
     **Run 2.0** adds experimental WASI 0.2 component support for cross-language composition, instant startup, and edge deployment.
     
@@ -95,6 +109,12 @@ run --version
 run --lang python --code "print('hello, polyglot world!')"
 
 run examples/go/hello/main.go
+
+run doctor
+
+run snippet go goroutine-pool > pool.go
+
+run --json python -c "print('machine readable')"
 
 run
 
@@ -171,8 +191,9 @@ run --version
 
 1. Detect whether the toolchain is available (e.g. `python3`, `go`, `rustc`).
 2. Prepare a temporary workspace (compilation for compiled languages, transient scripts for interpreters).
-3. Execute snippets, files, or stdin streams and surface stdout/stderr consistently.
-4. Manage session state for the interactive REPL (persistent modules, stateful scripts, or regenerated translation units).
+3. Reuse toolchain-aware cached build artifacts for repeated compiled snippets.
+4. Execute snippets, files, or stdin streams and surface stdout/stderr consistently.
+5. Manage session state for the interactive REPL (persistent modules, stateful scripts, or regenerated translation units).
 
 This architecture keeps the core lightweight while making it easy to add new runtimes or swap implementations.
 
@@ -222,6 +243,20 @@ run examples/rust/hello.rs
 run examples/typescript/progress.ts
 run examples/python/counter.py
 ```
+
+## Workflow Commands
+
+| Command | Purpose |
+| --- | --- |
+| `run doctor` | Check every supported language toolchain and version. |
+| `run cache --stats` | Inspect the persistent build cache. |
+| `run cache --clear` | Clear cached build artifacts. |
+| `run fmt <file>` | Format a file in place with the standard formatter for its language. |
+| `run snippet <lang> <name>` | Print a curated, offline template to stdout. |
+| `run watch <file>` | Re-run a file whenever it changes. |
+| `run share <file> [--port N]` | Serve a local syntax-highlighted HTML view and latest output. |
+| `--json` | Wrap one-shot execution in a JSON envelope for scripts and CI. |
+| `--timeout <seconds>` | Kill child execution after N seconds; `0` means unlimited. |
 
 ## REPL
 

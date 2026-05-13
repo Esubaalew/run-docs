@@ -95,6 +95,44 @@ Hello, run-kit!
 
 ---
 
+## New Workflow Commands
+
+Run a diagnostics pass to see which language toolchains are installed:
+
+```bash
+run doctor
+```
+
+Generate a curated starter snippet without leaving the terminal:
+
+```bash
+run snippet python http-server > server.py
+run server.py
+```
+
+Format a source file in place:
+
+```bash
+run fmt server.py
+```
+
+Watch a file and re-run it every time you save:
+
+```bash
+run watch server.py
+```
+
+Share a local read-only HTML view with syntax highlighting and the last execution output:
+
+```bash
+run share server.py
+```
+
+!!! note "Snippet templates are static"
+    `run snippet` is an offline template lookup. It does not call an AI model or generate code dynamically.
+
+---
+
 ## Language Aliases
 
 `run` supports multiple aliases for each language. Use whichever feels natural:
@@ -345,7 +383,7 @@ For longer sessions, use the interactive mode. By default, `run` starts in Pytho
 
 ```bash
 $ run
-run v0.7.0 — 25+ languages. Type :help for commands.
+run v0.8.0 — 25+ languages. Type :help for commands.
 
 >>> :py
 switched to python
@@ -430,21 +468,18 @@ Sum: 15
 
 ## Checking Available Languages
 
-Use `--check` to see which language toolchains are installed:
+Use `run doctor` to see which language toolchains are installed:
 
 ```bash
-$ run --check
-Checking language toolchains...
-
-  [ OK ] Bash           bash
-  [ OK ] Python         python
-  [ OK ] JavaScript     javascript
-  [ OK ] Rust           rust
-  [MISS] Swift          swift
-  ...
-
-  22 available, 3 missing, 25 total
+$ run doctor
+Language     Toolchain        Version                  Status
+────────────────────────────────────────────────────────────
+Python       python3          Python 3.12.3            ✓ OK
+Go           go               go version go1.22.1      ✓ OK
+Swift        swift            ✗ Not found              ✗ MISSING
 ```
+
+`--check` remains available as a compatibility alias, but `run doctor` is the recommended command.
 
 Or from the REPL:
 
@@ -504,9 +539,10 @@ Options:
   -f, --file <PATH>      Execute code from the provided file path
   -c, --code <CODE>      Execute the provided code snippet
       --no-detect        Disable heuristic language detection
-      --timeout <SECS>   Maximum execution time in seconds (default: 60)
+      --timeout <SECS>   Maximum execution time in seconds (0 = unlimited)
+      --json             Emit a JSON envelope for one-shot execution
       --timing           Show execution timing after each run
-      --check            Check which language toolchains are available
+      --check            Compatibility alias for diagnostics
       --install <PKG>    Install a package for a language (use -l to specify)
   -h, --help             Print help
 ```
@@ -538,7 +574,7 @@ Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```bash
 $ run --version
 
-run-kit 0.4.1
+run-kit 0.8.0
 Universal multi-language runner and smart REPL
 author: Esubalew Chekol <esubalewchekol6@gmail.com>
 homepage: https://esubalew.et

@@ -70,6 +70,7 @@ python>>> :!! pwd
 | `:debug [code]` | Run last snippet or code under debugger (Python: pdb) |
 | `:type` / `:which` | Show active language and session state |
 | `:reset` | Clear session state |
+| `:reset all` | Clear every active language session and REPL side state |
 | `:exit` / `:quit` | Exit the REPL |
 
 ---
@@ -821,14 +822,17 @@ Active language: python (no session)
 
 ---
 
-## `:reset`
+## `:reset` and `:reset all`
 
-Clear all state in the current language session. Variables, functions, and imports are discarded.
+Clear state in the current language session. Variables, functions, imports, tracked completion names, paste buffers, macros, and the last output are discarded for the active session.
+
+Use `:reset all` to close every active language session and clear the same REPL side state across the whole process.
 
 ### Usage
 
 ```bash
 >>> :reset
+>>> :reset all
 ```
 
 ### Example
@@ -857,6 +861,7 @@ NameError: name 'math' is not defined
 - Clear accumulated state
 - Fix issues from previous commands
 - Memory cleanup for long sessions
+- Reset all languages after switching among several sessions
 
 ### Language-Specific Behavior
 
@@ -881,6 +886,12 @@ javascript>>> :reset
 rust>>> let x = 10;
 rust>>> :reset
 # Clears accumulated code
+```
+
+**All sessions:**
+```bash
+python>>> :reset all
+all sessions reset
 ```
 
 ---

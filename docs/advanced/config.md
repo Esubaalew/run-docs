@@ -15,7 +15,7 @@
 # Default language when none is specified
 language = "python"
 
-# Execution timeout in seconds (default: 60)
+# Execution timeout in seconds (0 means unlimited)
 timeout = 30
 
 # Always show execution timing
@@ -26,6 +26,9 @@ bench_iterations = 10
 ```
 
 All fields are optional. Unset fields use their built-in defaults.
+
+!!! note "Timeout default"
+    Since `run-kit` 0.8, the built-in timeout default is unlimited. Set `timeout` in `run.toml`, `RUN_TIMEOUT_SECS`, or `--timeout` when you want a hard limit.
 
 ## Precedence
 

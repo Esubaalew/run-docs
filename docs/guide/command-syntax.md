@@ -68,9 +68,10 @@ Options:
   -c, --code <CODE>    Execute the provided code snippet
   -w, --watch          Watch a file and re-execute on changes
       --bench <N>      Benchmark: run code N times and report stats
-      --timeout <SECS> Maximum execution time in seconds (default: 60)
+      --timeout <SECS> Maximum execution time in seconds (0 = unlimited)
+      --json           Emit a JSON envelope for one-shot execution
       --timing         Show execution timing after each run
-      --check          Check which language toolchains are available
+      --check          Compatibility alias for diagnostics
       --versions       Show toolchain versions for available languages
       --install <PKG>  Install a package for the specified language
       --no-detect      Disable heuristic language detection
@@ -155,17 +156,17 @@ run python script.py
 
 ### File Watching (`-w, --watch`)
 
-Re-execute a file automatically whenever it changes on disk. Polls every 300ms for modifications.
+Re-execute a file automatically whenever it changes on disk. The `watch` subcommand uses native file notifications with a 150ms debounce and clears the screen between runs.
 
 ```bash
-# Watch a Python script
+# Preferred subcommand
+run watch script.py
+
+# Legacy flag form
 run --watch script.py
 
-# Watch with explicit language
-run -w -l python script.py
-
 # Short form
-run -w python script.py
+run -w -l python script.py
 ```
 
 Press `Ctrl+C` to stop watching.
@@ -213,6 +214,74 @@ run --versions
 
 # One language
 run --versions --lang python
+```
+
+### Diagnostics (`run doctor`)
+
+Check every supported language toolchain:
+
+```bash
+run doctor
+```
+
+`run doctor` exits with code 0 when all toolchains are available and 1 when any are missing. `--check` remains available for compatibility.
+
+### JSON Output (`--json`)
+
+Wrap stdout, stderr, exit code, duration, language, and toolchain version in a JSON envelope:
+
+```bash
+run --json python -c "print('hello')"
+```
+
+### Timeout (`--timeout`)
+
+Set a per-execution timeout. `0` means unlimited. Timed-out child processes are killed and `run` exits with code 124:
+
+```bash
+run --timeout 2 python -c "import time; time.sleep(10)"
+```
+
+### Cache Management
+
+Compiled languages reuse a toolchain-aware persistent build cache:
+
+```bash
+run cache --stats
+run cache --clear
+run cache --clear-lang rust
+```
+
+### Formatter Dispatch
+
+Format files in place using the standard formatter installed on your system:
+
+```bash
+run fmt app.py
+run fmt main.go
+run fmt src/main.rs
+```
+
+Exit code 0 means formatted, 1 means the formatter ran and failed, and 2 means no formatter was available.
+
+### Snippet Templates
+
+Print a curated static template:
+
+```bash
+run snippet python --list
+run snippet python http-server > server.py
+```
+
+Templates are built into the binary and do not use AI generation.
+
+### Local Sharing
+
+Serve a syntax-highlighted local HTML view of a file and its latest output:
+
+```bash
+run share server.py
+run share server.py --port 8080
 ```
 
 ### Disable Detection (`--no-detect`)
