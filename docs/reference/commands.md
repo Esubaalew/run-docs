@@ -22,6 +22,10 @@ Use the site search (top bar) to jump to any command or flag.
 | `run cache --clear` | Clear all persistent build cache entries. |
 | `run cache --clear-lang <LANG>` | Clear cache entries for one language namespace. |
 | `run share <file> [--port N]` | Start a local syntax-highlighted file and output viewer. |
+| `run alias list` | List built-in and custom language aliases. |
+| `run alias add <A> <LANG>` | Add a custom alias (saved to config). |
+| `run alias set <A> <LANG>` | Same as `add`. |
+| `run alias remove <A>` | Remove a custom alias (`rm`, `delete` also work). |
 | `-l, --lang <LANG>` | Force a language (disables auto-detect). |
 | `-f, --file <PATH>` | Run a file. |
 | `-c, --code <CODE>` | Run inline code. |
@@ -107,3 +111,13 @@ run cache --stats
 run cache --clear
 run cache --clear-lang rust
 ```
+
+## Format and Share
+
+`run fmt` and `run share` detect language from the file extension across all 25 supported languages (including Kotlin, Swift, Dart, and Elixir). Exit code `2` when no formatter is installed for that language.
+
+Supported formatters: `black`/`autopep8` (Python), `prettier` (JS/TS), `rustfmt`, `gofmt`, `clang-format` (C/C++), `google-java-format` (Java).
+
+## Custom Aliases
+
+See [Custom Aliases](../advanced/aliases.md) for `run alias add`, `run alias remove`, and config file location.

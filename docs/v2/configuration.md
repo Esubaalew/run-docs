@@ -164,12 +164,14 @@ Build configuration.
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `output_dir` | string | `"target/wasm"` | Output directory |
-| `opt_level` | string | `"debug"` | Optimization: `debug`, `release` |
+| `target` | string | `"wasm32-wasip1"` | WASM target triple for builds and registry metadata |
+| `opt_level` | string | `"release"` | Optimization: `debug`, `release` |
 | `reproducible` | bool | `false` | Reproducible builds |
 
 ```toml
 [build]
 output_dir = "dist"
+target = "wasm32-wasip1"
 opt_level = "release"
 reproducible = true
 ```
@@ -260,22 +262,25 @@ run v2 deploy --profile production
 
 ### run.lock.toml
 
-Toolchain lockfile for reproducible builds.
+Toolchain lockfile for reproducible builds. Pins versions for `cargo-component`, `componentize-py`, `jco`, `tinygo`, `wasm-tools`, and `wasmtime`.
 
 ```toml
-[toolchains]
-cargo-component = "0.20.0"
-wasm-tools = "1.219.1"
-componentize-py = "0.15.0"
-
-[checksums]
-cargo-component = "sha256:abc123..."
+[toolchains.wasm-tools]
+version = "1.210.0"
+sha256 = ""
+source = "https://github.com/bytecodealliance/wasm-tools/releases/tag/v1.210.0"
 ```
 
-Generated with:
+Populate SHA256 hashes from installed binaries:
 
 ```bash
 run v2 toolchain sync
+```
+
+Verify toolchains:
+
+```bash
+run v2 verify
 ```
 
 ### .run/cache/

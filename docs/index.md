@@ -36,8 +36,23 @@ description: Run is a universal REPL for 25+ languages and a WASI 0.2 component 
 
 ---
 
-!!! success "New in run-kit 0.8"
+!!! success "New in run-kit 0.10"
+    Custom language aliases (`run alias add`), full extension detection for `run fmt` and `run share`, Run 2.0 CI coverage, and aligned `wasm32-wasip1` targets.
+
+    ```bash
+    run alias add p python
+    run p -c "print('via custom alias')"
+    run fmt examples/kotlin/hello.kt
+    run v2 toolchain sync
+    ```
+
+    [Custom aliases guide](advanced/aliases.md){ .md-button }
+
+---
+
+!!! success "New in run-kit 0.9"
     `run` now includes a toolchain-aware build cache, diagnostics, formatter dispatch, local file sharing, file watching, JSON output, and curated snippet templates.
+    This release also hardens C++ precompiled-header invalidation after compiler upgrades and makes workflow commands visible in `run --help`.
 
     ```bash
     run doctor
@@ -255,6 +270,9 @@ run examples/python/counter.py
 | `run snippet <lang> <name>` | Print a curated, offline template to stdout. |
 | `run watch <file>` | Re-run a file whenever it changes. |
 | `run share <file> [--port N]` | Serve a local syntax-highlighted HTML view and latest output. |
+| `run alias list` | List built-in and custom language aliases. |
+| `run alias add <A> <LANG>` | Add a custom alias (persisted in config). |
+| `run alias remove <A>` | Remove a custom alias. |
 | `--json` | Wrap one-shot execution in a JSON envelope for scripts and CI. |
 | `--timeout <seconds>` | Kill child execution after N seconds; `0` means unlimited. |
 

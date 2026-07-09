@@ -429,9 +429,42 @@ available languages: bash, c, cpp, crystal, csharp, dart, elixir, go, groovy, ha
 
 Aliases are documented in the language pages and on the Supported Languages page.
 
+## Custom Aliases (run-kit 0.10+)
+
+Starting in **run-kit 0.10**, you can define persistent custom aliases without shell configuration:
+
+```bash
+run alias list
+run alias add p python
+run alias set myrs rust
+run alias remove p
+```
+
+Custom aliases are stored in `~/.config/run-kit/aliases.toml` (or `$XDG_CONFIG_HOME/run-kit/aliases.toml`):
+
+```toml
+[aliases]
+p = "python"
+myrs = "rust"
+```
+
+They work everywhere built-in aliases do: CLI execution, REPL language switching (`:p`, `:myrs`), and command parsing.
+
+### Rules
+
+| Rule | Detail |
+|------|--------|
+| No shadowing | Built-in names like `py`, `rs`, or `python` cannot be overridden |
+| Valid target | Language must be supported (`run doctor`) |
+| Normalized | Names are stored lowercase |
+
+`run alias list` shows built-in aliases first, then a **Custom aliases** section when any exist.
+
+---
+
 ## Custom Aliases (Shell)
 
-You can create your own aliases in your shell:
+You can also create shell aliases if you prefer:
 
 ```bash
 alias pyrun='run python'

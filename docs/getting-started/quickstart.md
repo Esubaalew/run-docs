@@ -383,7 +383,7 @@ For longer sessions, use the interactive mode. By default, `run` starts in Pytho
 
 ```bash
 $ run
-run v0.8.0 — 25+ languages. Type :help for commands.
+run v0.10.0 — 25+ languages. Type :help for commands.
 
 >>> :py
 switched to python
@@ -574,7 +574,7 @@ Any language id or alias works as a shortcut, e.g. :py, :cpp, :csharp, :php.
 ```bash
 $ run --version
 
-run-kit 0.8.0
+run-kit 0.10.0
 Universal multi-language runner and smart REPL
 author: Esubalew Chekol <esubalewchekol6@gmail.com>
 homepage: https://esubalew.et
