@@ -576,7 +576,7 @@ $ run --version
 
 run-kit 0.10.0
 Universal multi-language runner and smart REPL
-author: Esubalew Chekol <esubalewchekol6@gmail.com>
+author: Esubalew Chekol <hi@esubalew.et>
 homepage: https://esubalew.et
 repository: https://github.com/esubaalew/run
 license: Apache-2.0
